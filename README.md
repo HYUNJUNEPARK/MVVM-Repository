@@ -1,5 +1,5 @@
 # Counter_MVVM_dataBinding
-<img height="280" width="180">![cover](https://user-images.githubusercontent.com/89306567/148781458-4087b393-cae3-4951-bd13-9ca17fbe1025.png)</img>
+<img src="https://user-images.githubusercontent.com/89306567/148781458-4087b393-cae3-4951-bd13-9ca17fbe1025.png" height="280" width="180"></img>
 </br>
 -dataBinding</br>
 -ViewModel</br>
