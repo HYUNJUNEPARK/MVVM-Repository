@@ -1,6 +1,6 @@
 # Counter_MVVM_dataBinding
 ![cover](https://user-images.githubusercontent.com/89306567/148781458-4087b393-cae3-4951-bd13-9ca17fbe1025.png)
-</br>
+</hr>
 -dataBinding</br>
 -ViewModel</br>
 -LiveData</br>
