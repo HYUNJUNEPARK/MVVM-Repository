@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigationContact"
+        android:title="연락처"
+        android:icon="@drawable/ic_navigation_bar_contact"/>
+
+    <item
+        android:id="@+id/navigationMessage"
+        android:title="메시지"
+        android:icon="@drawable/ic_navigation_bar_message"/>
+
+    <item
+        android:id="@+id/navigationKeypad"
+        android:title="키패드"
+        android:icon="@drawable/ic_navigation_bar_keypad"/>
+
+    <item
+        android:id="@+id/navigationRecent"
+        android:title="최근기록"
+        android:icon="@drawable/ic_navigation_bar_recent"/>
+
+    <item
+        android:id="@+id/navigationCalendar"
+        android:title="콜스케줄러"
+        android:icon="@drawable/ic_navigation_bar_calendar"/>
+</menu>
