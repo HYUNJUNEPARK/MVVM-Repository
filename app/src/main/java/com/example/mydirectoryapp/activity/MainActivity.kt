@@ -1,6 +1,8 @@
 package com.example.mydirectoryapp.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
+            R.id.addPerson -> {
+                var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

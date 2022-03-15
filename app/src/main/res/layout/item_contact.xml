@@ -6,11 +6,16 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/contactImageView"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contactTextView"
+        tools:text ="강"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/profile_background"
+        android:background="@drawable/profile_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,25 +26,26 @@
         android:layout_marginLeft="10dp"
         android:textSize="17sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/contactImageView"
+        app:layout_constraintStart_toEndOf="@id/contactTextView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="연락처1" />
+        tools:text="강마루" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/numberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/contactImageView"
-        app:layout_constraintStart_toEndOf="@+id/contactImageView"
+        app:layout_constraintBottom_toBottomOf="@id/contactTextView"
+        app:layout_constraintStart_toEndOf="@+id/contactTextView"
         tools:text="010-1111-2222" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/callButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/ic_baseline_call"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

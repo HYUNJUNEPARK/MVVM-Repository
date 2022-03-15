@@ -1,15 +1,19 @@
 package com.example.mydirectoryapp.adapter
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.databinding.ItemContactBinding
 import com.example.mydirectoryapp.model.Contact
 
-class ContactAdapter(): RecyclerView.Adapter<ContactAdapter.MyHolder>() {
+class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHolder>() {
     var contactList = mutableListOf<Contact>()
+    val context: Context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val binding = ItemContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,8 +31,20 @@ class ContactAdapter(): RecyclerView.Adapter<ContactAdapter.MyHolder>() {
             }
         }
         fun setContact(contact: Contact) {
+            var charRange = IntRange(0, 0)
+            binding.contactTextView.text = contact.name.slice(charRange)
             binding.nameTextView.text = contact.name
             binding.numberTextView.text = contact.number
+            setContactBallColor(binding.contactTextView)
+        }
+        private fun setContactBallColor(textView: TextView) {
+            when((1..5).random()) {
+                1 -> textView.background = ContextCompat.getDrawable(context, R.drawable.profile_background_black)
+                2 -> textView.background = ContextCompat.getDrawable(context, R.drawable.profile_background_blue)
+                3 -> textView.background = ContextCompat.getDrawable(context, R.drawable.profile_background_green)
+                4 -> textView.background = ContextCompat.getDrawable(context, R.drawable.profile_background_red)
+                5 -> textView.background = ContextCompat.getDrawable(context, R.drawable.profile_background_puple)
+            }
         }
     }
 

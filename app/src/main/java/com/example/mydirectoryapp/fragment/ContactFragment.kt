@@ -1,7 +1,8 @@
 package com.example.mydirectoryapp.fragment
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,21 +22,27 @@ class ContactFragment : Fragment() {
     }
 
     private fun initRecyclerView(binding: FragmentContactBinding) {
-        val adapter = ContactAdapter()
-        adapter.contactList = loadData()
+        val adapter = ContactAdapter(requireContext())
+        adapter.contactList = getContact()
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
     }
 
-    private fun loadData(): MutableList<Contact> {
-        val contact: MutableList<Contact> = mutableListOf()
-        for(i in 1..30) {
-            val name = "Person $i"
-            val number = "010-1234-00%02d".format(i)
-            var info = Contact(name, number)
-            contact.add(info)
+    private fun getContact(): MutableList<Contact> {
+        val contactList = mutableListOf<Contact>()
+        val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
+        val contactArray = arrayOf(
+            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+            ContactsContract.CommonDataKinds.Phone.NUMBER
+        )
+        val cursor = context?.contentResolver?.query(uri, contactArray, null, null, null)
+        while (cursor?.moveToNext()==true) {
+            val name = cursor.getString(0)
+            val number = cursor.getString(1)
+            val person= Contact(name, number)
+            contactList.add(person)
         }
-        return contact
+        return contactList
     }
 }
