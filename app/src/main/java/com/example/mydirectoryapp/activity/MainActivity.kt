@@ -28,22 +28,27 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         when(item.itemId) {
             R.id.navigationContact -> {
                 binding.viewPager.currentItem = 0
+                binding.toolBarTitle.text = getString(R.string.contact)
                 return true
             }
             R.id.navigationMessage -> {
                 binding.viewPager.currentItem = 1
+                binding.toolBarTitle.text = getString(R.string.message)
                 return true
             }
             R.id.navigationKeypad -> {
                 binding.viewPager.currentItem = 2
+                binding.toolBarTitle.text = getString(R.string.keypad)
                 return true
             }
             R.id.navigationRecent -> {
                 binding.viewPager.currentItem = 3
+                binding.toolBarTitle.text = getString(R.string.recent)
                 return true
             }
             R.id.navigationCalendar -> {
                 binding.viewPager.currentItem = 4
+                binding.toolBarTitle.text = getString(R.string.calendar)
                 return true
             }
             else -> {

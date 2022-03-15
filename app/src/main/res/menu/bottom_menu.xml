@@ -2,26 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigationContact"
-        android:title="연락처"
+        android:title="@string/contact"
         android:icon="@drawable/ic_navigation_bar_contact"/>
 
     <item
         android:id="@+id/navigationMessage"
-        android:title="메시지"
+        android:title="@string/message"
         android:icon="@drawable/ic_navigation_bar_message"/>
 
     <item
         android:id="@+id/navigationKeypad"
-        android:title="키패드"
+        android:title="@string/keypad"
         android:icon="@drawable/ic_navigation_bar_keypad"/>
 
     <item
         android:id="@+id/navigationRecent"
-        android:title="최근기록"
+        android:title="@string/recent"
         android:icon="@drawable/ic_navigation_bar_recent"/>
 
     <item
         android:id="@+id/navigationCalendar"
-        android:title="콜스케줄러"
+        android:title="@string/calendar"
         android:icon="@drawable/ic_navigation_bar_calendar"/>
 </menu>
