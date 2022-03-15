@@ -1,7 +1,10 @@
 package com.example.mydirectoryapp.activity
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mydirectoryapp.R
@@ -16,25 +19,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolBar)
 
         initFragments()
-    }
-
-    private fun initFragments() {
-        val fragmentList = listOf(ContactFragment(), MessageFragment(), KeypadFragment(), RecentFragment(), CalendarFragment())
-        val adapter = FragmentAdapter(this)
-        adapter.fragmentList = fragmentList
-        binding.viewPager.adapter = adapter
-
-        binding.viewPager.registerOnPageChangeCallback(
-            object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    binding.bottomNavigation.menu.getItem(position).isChecked = true
-                }
-            }
-        )
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -63,5 +50,36 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 return false
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.menu1 -> Toast.makeText(this, "문의하기 버튼 클릭됨", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initFragments() {
+        val fragmentList = listOf(ContactFragment(), MessageFragment(), KeypadFragment(), RecentFragment(), CalendarFragment())
+        val adapter = FragmentAdapter(this)
+        adapter.fragmentList = fragmentList
+        binding.viewPager.adapter = adapter
+
+        binding.viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.bottomNavigation.menu.getItem(position).isChecked = true
+                }
+            }
+        )
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
 }
