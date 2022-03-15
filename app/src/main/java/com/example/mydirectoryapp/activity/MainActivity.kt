@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.menu1 -> Toast.makeText(this, "문의하기 버튼 클릭됨", Toast.LENGTH_SHORT).show()
+            R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
