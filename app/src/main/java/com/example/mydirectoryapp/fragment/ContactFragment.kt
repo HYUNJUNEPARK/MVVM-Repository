@@ -13,8 +13,12 @@ import com.example.mydirectoryapp.databinding.FragmentContactBinding
 import com.example.mydirectoryapp.model.Contact
 
 class ContactFragment : Fragment() {
+
+    var _binding: FragmentContactBinding? = null
+    val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentContactBinding.inflate(inflater, container, false)
+        _binding = FragmentContactBinding.inflate(inflater, container, false)
 
         initRecyclerView(binding)
 
@@ -29,7 +33,7 @@ class ContactFragment : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
     }
 
-    private fun getContact(): MutableList<Contact> {
+    fun getContact(): MutableList<Contact> {
         val contactList = mutableListOf<Contact>()
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(

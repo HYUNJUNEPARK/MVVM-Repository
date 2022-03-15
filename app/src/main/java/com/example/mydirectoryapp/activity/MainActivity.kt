@@ -7,9 +7,12 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mydirectoryapp.R
+import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.adapter.FragmentAdapter
 import com.example.mydirectoryapp.databinding.ActivityMainBinding
 import com.example.mydirectoryapp.fragment.*
@@ -18,10 +21,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
+    lateinit var resultListener: ActivityResultLauncher<Intent> //
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+
+        resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            //[START 공부]
+            val adapter = binding.viewPager.adapter as FragmentAdapter
+            val fragment = adapter.fragmentList[0] as ContactFragment
+            val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
+            contactAdapter.contactList = fragment.getContact()
+            contactAdapter.notifyDataSetChanged()
+            //[END 공부]
+        }
 
         initFragments()
     }
@@ -71,7 +87,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
             R.id.addPerson -> {
                 var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-                startActivity(intent)
+                //startActivity(intent)
+                resultListener.launch(intent)
+
+
             }
         }
         return super.onOptionsItemSelected(item)
