@@ -34,17 +34,19 @@
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/accountAButton"
+            android:id="@+id/simAButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A"
+            android:text="SIM A"
+            android:drawableRight="@drawable/sim_mobile_2"
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/accountBButton"
+            android:id="@+id/simBButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B"
+            android:drawableRight="@drawable/sim_home_1"
+            android:text="SIM B"
             android:textSize="12sp" />
     </LinearLayout>
 

@@ -33,15 +33,16 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         initDrawerToggle()
         initNavigationItemListener()
 
+        //[START 공부]
         resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            //[START 공부]
             val adapter = binding.viewPager.adapter as FragmentAdapter
             val fragment = adapter.fragmentList[0] as ContactFragment
             val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
             contactAdapter.contactList = fragment.getContact()
             contactAdapter.notifyDataSetChanged()
-            //[END 공부]
+
         }
+        //[END 공부]
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
+    //연락처 추가
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)

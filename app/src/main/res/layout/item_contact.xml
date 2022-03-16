@@ -8,15 +8,25 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/contactTextView"
-        tools:text ="강"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/profile_background"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/profile_background"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="강" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/callButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_baseline_call"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -35,18 +45,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/contactTextView"
         app:layout_constraintStart_toEndOf="@+id/contactTextView"
         tools:text="010-1111-2222" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/callButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/ic_baseline_call"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/simImage"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintStart_toEndOf="@id/numberTextView"
+        app:layout_constraintTop_toTopOf="@id/numberTextView"
+        app:layout_constraintBottom_toBottomOf="@id/numberTextView"
+        android:background="@drawable/sim_else" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

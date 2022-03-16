@@ -3,6 +3,7 @@ package com.example.mydirectoryapp.fragment
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +18,14 @@ class ContactFragment : Fragment() {
     var _binding: FragmentContactBinding? = null
     val binding get() = _binding!!
 
+
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
 
         initRecyclerView(binding)
+
 
         return binding.root
     }
@@ -38,15 +43,19 @@ class ContactFragment : Fragment() {
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-            ContactsContract.CommonDataKinds.Phone.NUMBER
+            ContactsContract.CommonDataKinds.Phone.NUMBER,
+            ContactsContract.CommonDataKinds.Phone.TYPE /*1)HOME, 2)MOBILE, 3)WORK*/
         )
         val cursor = context?.contentResolver?.query(uri, contactArray, null, null, null)
-        while (cursor?.moveToNext()==true) {
+        while (cursor?.moveToNext() == true) {
             val name = cursor.getString(0)
             val number = cursor.getString(1)
-            val person= Contact(name, number)
+            val sim = cursor.getString(2)
+            val person= Contact(name, number, sim)
             contactList.add(person)
         }
+
+        //cursor?.close()
         return contactList
     }
 }
