@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mydirectoryapp.R
@@ -20,16 +21,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
-    lateinit var resultListener: ActivityResultLauncher<Intent> //
+    lateinit var toggle: ActionBarDrawerToggle
+    lateinit var resultListener: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        initFragments()
+        initDrawerToggle()
+        initNavigationItemListener()
 
+        resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             //[START 공부]
             val adapter = binding.viewPager.adapter as FragmentAdapter
             val fragment = adapter.fragmentList[0] as ContactFragment
@@ -38,8 +42,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             contactAdapter.notifyDataSetChanged()
             //[END 공부]
         }
-
-        initFragments()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -83,16 +85,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //Toolbar Menu Event
         when(item.itemId) {
             R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
             R.id.addPerson -> {
                 var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-                //startActivity(intent)
                 resultListener.launch(intent)
-
-
             }
         }
+        //DrawerLayout-NavigationView Event
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -111,5 +116,23 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
         )
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
+    }
+
+    private fun initDrawerToggle() {
+        toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opend, R.string.drawer_closed)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toggle.syncState()
+    }
+
+    private fun initNavigationItemListener() {
+        binding.mainDrawerView.setNavigationItemSelectedListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.item1 -> Toast.makeText(this, "Item1 Clicked", Toast.LENGTH_SHORT).show()
+                R.id.item2 -> Toast.makeText(this, "Item2 Clicked", Toast.LENGTH_SHORT).show()
+                R.id.item3 -> Toast.makeText(this, "Item3 Clicked", Toast.LENGTH_SHORT).show()
+                R.id.item4 -> Toast.makeText(this, "Item4 Clicked", Toast.LENGTH_SHORT).show()
+            }
+            true
+        }
     }
 }

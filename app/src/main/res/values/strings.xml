@@ -8,4 +8,6 @@
     <string name="recent">최근기록</string>
     <string name="calendar">콜스케줄러</string>
     <string name="test_message">SAMPLE TOAST MESSAGE</string>
+    <string name="drawer_opend">OPEND</string>
+    <string name="drawer_closed">CLOSED</string>
 </resources>
