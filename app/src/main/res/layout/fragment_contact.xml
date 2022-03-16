@@ -38,14 +38,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SIM A"
-            android:drawableRight="@drawable/sim_mobile_2"
+            android:drawableRight="@drawable/sim_a_mobile_2_red"
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/simBButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/sim_home_1"
+            android:drawableRight="@drawable/sim_b_home_1_blue"
             android:text="SIM B"
             android:textSize="12sp" />
     </LinearLayout>

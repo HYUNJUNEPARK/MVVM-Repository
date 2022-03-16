@@ -18,28 +18,62 @@ class ContactFragment : Fragment() {
     var _binding: FragmentContactBinding? = null
     val binding get() = _binding!!
 
-
-
+    var contactListAll = mutableListOf<Contact>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
 
-        initRecyclerView(binding)
+        Log.d("testlog", "contact oncreateview")
 
+        contactListAll.clear()
+        getContact()
+        initRecyclerView(binding, contactListAll)
+
+        binding.simBButton.setOnClickListener {
+            val contactListSimB = mutableListOf<Contact>()
+
+            for (i in contactListAll) {
+                if (i.sim == "1") {
+                    contactListSimB.add(i)
+                }
+            }
+            initRecyclerView(binding, contactListSimB)
+        }
+
+        binding.simAButton.setOnClickListener {
+            val contactListSimA = mutableListOf<Contact>()
+
+            for (i in contactListAll) {
+                if (i.sim == "2") {
+                    contactListSimA.add(i)
+                }
+            }
+            initRecyclerView(binding, contactListSimA)
+        }
+
+        binding.allButton.setOnClickListener {
+            initRecyclerView(binding, contactListAll)
+        }
 
         return binding.root
     }
 
-    private fun initRecyclerView(binding: FragmentContactBinding) {
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("testlog", "contact destroyed")
+    }
+
+    private fun initRecyclerView(binding: FragmentContactBinding, contactList: MutableList<Contact>) {
         val adapter = ContactAdapter(requireContext())
-        adapter.contactList = getContact()
+        //adapter.contactList = getContact()
+        adapter.contactList = contactList
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
     }
 
-    fun getContact(): MutableList<Contact> {
-        val contactList = mutableListOf<Contact>()
+    fun getContact() {
+//        val contactList = mutableListOf<Contact>()
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
@@ -52,10 +86,10 @@ class ContactFragment : Fragment() {
             val number = cursor.getString(1)
             val sim = cursor.getString(2)
             val person= Contact(name, number, sim)
-            contactList.add(person)
+//            contactList.add(person)
+            contactListAll.add(person)
         }
-
-        //cursor?.close()
-        return contactList
+        cursor?.close()
+//        return contactList
     }
 }

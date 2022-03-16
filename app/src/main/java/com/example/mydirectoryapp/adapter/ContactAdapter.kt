@@ -38,12 +38,12 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
             binding.numberTextView.text = contact.number
 
             when (contact.sim) {
-                "1" -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_home_1)
-                "2" -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_mobile_2)
+                "1" -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_b_home_1_blue)
+                "2" -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_a_mobile_2_red)
                 else -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_else)
             }
         }
-        
+
         private fun setContactBallColor(textView: TextView) {
             when((1..5).random()) {
                 1 -> textView.background = ContextCompat.getDrawable(context, R.drawable.profile_background_black)

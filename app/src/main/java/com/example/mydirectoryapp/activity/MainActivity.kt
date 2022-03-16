@@ -3,6 +3,7 @@ package com.example.mydirectoryapp.activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -38,7 +39,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             val adapter = binding.viewPager.adapter as FragmentAdapter
             val fragment = adapter.fragmentList[0] as ContactFragment
             val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
-            contactAdapter.contactList = fragment.getContact()
+            fragment.contactListAll.clear()
+            fragment.getContact()
+            contactAdapter.contactList = fragment.contactListAll
             contactAdapter.notifyDataSetChanged()
 
         }
@@ -78,11 +81,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
     }
 
-    //연락처 추가
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
-
         return true
     }
 
@@ -99,16 +100,20 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (toggle.onOptionsItemSelected(item)) {
             return true
         }
-
         return super.onOptionsItemSelected(item)
     }
 
     private fun initFragments() {
-        val fragmentList = listOf(ContactFragment(), MessageFragment(), KeypadFragment(), RecentFragment(), CalendarFragment())
+        val fragmentList = listOf(
+            ContactFragment(),
+            MessageFragment(),
+            KeypadFragment(),
+            RecentFragment(),
+            CalendarFragment()
+        )
         val adapter = FragmentAdapter(this)
         adapter.fragmentList = fragmentList
         binding.viewPager.adapter = adapter
-
         binding.viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -119,6 +124,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         )
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
+
 
     private fun initDrawerToggle() {
         toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opend, R.string.drawer_closed)
