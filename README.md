@@ -9,6 +9,18 @@ viewPager2 네비게이션 바 : 이거 참고했음
 https://hanyeop.tistory.com/197
 
 
+
+★전화, 연락처, 문자 등 각종 인텐트 사용법
+https://fumin.tistory.com/358
+
+
+
+
+
+
+
+
+
 2. 액션바 구현
 -드로어 레이아웃
 -번호추가 아이콘

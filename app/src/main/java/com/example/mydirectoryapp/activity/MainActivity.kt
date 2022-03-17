@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolBar)
 
         initFragments()
-        initBottomNaviListener()
+        initLinkBottomNaviWithViewPager()
         initDrawerToggle()
         initDrawerNavigationItemListener()
 
@@ -47,7 +47,43 @@ class MainActivity : AppCompatActivity() {
         //[END 공부]
     }
 
-    private fun initBottomNaviListener() {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.toolbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //Toolbar Menu Event
+        when(item.itemId) {
+            R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
+            R.id.addPerson -> {
+                var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+                resultListener.launch(intent)
+            }
+        }
+        //DrawerLayout-NavigationView Event
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+//Start Function
+    private fun initFragments() {
+        val fragmentList = listOf(
+            ContactFragment(),
+            MessageFragment(),
+            KeypadFragment(),
+            RecentFragment(),
+            CalendarFragment()
+        )
+        val adapter = FragmentAdapter(this)
+        adapter.fragmentList = fragmentList
+        binding.viewPager.adapter = adapter
+    }
+
+    private fun initLinkBottomNaviWithViewPager() {
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.navigationContact -> {
@@ -80,21 +116,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun initFragments() {
-        val fragmentList = listOf(
-            ContactFragment(),
-            MessageFragment(),
-            KeypadFragment(),
-            RecentFragment(),
-            CalendarFragment()
-        )
-        val adapter = FragmentAdapter(this)
-        adapter.fragmentList = fragmentList
-        binding.viewPager.adapter = adapter
-
-
         binding.viewPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -104,30 +125,6 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.toolbar_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        //Toolbar Menu Event
-        when(item.itemId) {
-            R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
-            R.id.addPerson -> {
-                var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-                resultListener.launch(intent)
-            }
-        }
-        //DrawerLayout-NavigationView Event
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
 
     private fun initDrawerToggle() {
         toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opend, R.string.drawer_closed)

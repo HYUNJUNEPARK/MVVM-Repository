@@ -1,6 +1,8 @@
 package com.example.mydirectoryapp.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,17 +22,25 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
         return MyHolder(binding)
     }
 
-    inner class MyHolder(private val binding: ItemContactBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class MyHolder(val binding: ItemContactBinding): RecyclerView.ViewHolder(binding.root) {
+        //[공부]
+//        lateinit var _contact: Contact
+        var _contact: Contact ?= null
+
         init {
             binding.callButton.setOnClickListener {
-                Toast.makeText(binding.root.context,"Calling To ${binding.numberTextView.text}", Toast.LENGTH_SHORT).show()
+                val tel ="tel:${_contact?.number}"
+                val intent = Intent("android.intent.action.CALL", Uri.parse(tel))
+                context.startActivity(intent)
             }
-
             binding.root.setOnClickListener {
-                Toast.makeText(binding.root.context,"Open Profile : ${binding.nameTextView.text}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/${_contact?.id}"))
+                context.startActivity(intent)
             }
         }
+
         fun setContact(contact: Contact) {
+            _contact = contact
             val charRange = IntRange(0, 0)
             binding.contactTextView.text = contact.name.slice(charRange)
             setContactBallColor(binding.contactTextView)
