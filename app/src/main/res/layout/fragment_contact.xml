@@ -48,6 +48,14 @@
             android:drawableRight="@drawable/sim_b_home_1_blue"
             android:text="SIM B"
             android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/simElseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/sim_else"
+            android:text="ETC"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView

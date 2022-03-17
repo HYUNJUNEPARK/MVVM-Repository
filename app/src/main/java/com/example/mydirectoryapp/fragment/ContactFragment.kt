@@ -3,7 +3,6 @@ package com.example.mydirectoryapp.fragment
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,21 +16,23 @@ class ContactFragment : Fragment() {
 
     var _binding: FragmentContactBinding? = null
     val binding get() = _binding!!
-
     var contactListAll = mutableListOf<Contact>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
 
-        Log.d("testlog", "contact oncreateview")
-
         contactListAll.clear()
         getContact()
-        initRecyclerView(binding, contactListAll)
 
+        initRecyclerView(binding, contactListAll)
+        initButtons()
+
+        return binding.root
+    }
+
+    private fun initButtons() {
         binding.simBButton.setOnClickListener {
             val contactListSimB = mutableListOf<Contact>()
-
             for (i in contactListAll) {
                 if (i.sim == "1") {
                     contactListSimB.add(i)
@@ -42,7 +43,6 @@ class ContactFragment : Fragment() {
 
         binding.simAButton.setOnClickListener {
             val contactListSimA = mutableListOf<Contact>()
-
             for (i in contactListAll) {
                 if (i.sim == "2") {
                     contactListSimA.add(i)
@@ -55,17 +55,20 @@ class ContactFragment : Fragment() {
             initRecyclerView(binding, contactListAll)
         }
 
-        return binding.root
+        binding.simElseButton.setOnClickListener {
+            val contactListSimElse = mutableListOf<Contact>()
+            for (i in contactListAll) {
+                if (i.sim != "1" && i.sim != "2") {
+                    contactListSimElse.add(i)
+                }
+            }
+            initRecyclerView(binding, contactListSimElse)
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("testlog", "contact destroyed")
-    }
-
+    //binding 파라미터로 안넣어줘도 될듯함
     private fun initRecyclerView(binding: FragmentContactBinding, contactList: MutableList<Contact>) {
         val adapter = ContactAdapter(requireContext())
-        //adapter.contactList = getContact()
         adapter.contactList = contactList
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
@@ -73,7 +76,6 @@ class ContactFragment : Fragment() {
     }
 
     fun getContact() {
-//        val contactList = mutableListOf<Contact>()
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
@@ -86,10 +88,8 @@ class ContactFragment : Fragment() {
             val number = cursor.getString(1)
             val sim = cursor.getString(2)
             val person= Contact(name, number, sim)
-//            contactList.add(person)
             contactListAll.add(person)
         }
         cursor?.close()
-//        return contactList
     }
 }

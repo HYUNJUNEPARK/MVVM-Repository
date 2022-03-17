@@ -11,13 +11,6 @@ import com.example.mydirectoryapp.R
 class MessageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        Log.d("testlog", "message oncreateview")
         return inflater.inflate(R.layout.fragment_message, container, false)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("testlog", "Message destroyed")
-
     }
 }

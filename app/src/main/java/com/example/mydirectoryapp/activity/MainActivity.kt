@@ -3,7 +3,6 @@ package com.example.mydirectoryapp.activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -18,9 +17,8 @@ import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.adapter.FragmentAdapter
 import com.example.mydirectoryapp.databinding.ActivityMainBinding
 import com.example.mydirectoryapp.fragment.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var resultListener: ActivityResultLauncher<Intent>
@@ -31,8 +29,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setSupportActionBar(binding.toolBar)
 
         initFragments()
+        initBottomNaviListener()
         initDrawerToggle()
-        initNavigationItemListener()
+        initDrawerNavigationItemListener()
 
         //[START 공부]
         resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -48,37 +47,62 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         //[END 공부]
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.navigationContact -> {
-                binding.viewPager.currentItem = 0
-                binding.toolBarTitle.text = getString(R.string.contact)
-                return true
-            }
-            R.id.navigationMessage -> {
-                binding.viewPager.currentItem = 1
-                binding.toolBarTitle.text = getString(R.string.message)
-                return true
-            }
-            R.id.navigationKeypad -> {
-                binding.viewPager.currentItem = 2
-                binding.toolBarTitle.text = getString(R.string.keypad)
-                return true
-            }
-            R.id.navigationRecent -> {
-                binding.viewPager.currentItem = 3
-                binding.toolBarTitle.text = getString(R.string.recent)
-                return true
-            }
-            R.id.navigationCalendar -> {
-                binding.viewPager.currentItem = 4
-                binding.toolBarTitle.text = getString(R.string.calendar)
-                return true
-            }
-            else -> {
-                return false
+    private fun initBottomNaviListener() {
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.navigationContact -> {
+                    binding.viewPager.currentItem = 0
+                    binding.toolBarTitle.text = getString(R.string.contact)
+                    true
+                }
+                R.id.navigationMessage -> {
+                    binding.viewPager.currentItem = 1
+                    binding.toolBarTitle.text = getString(R.string.message)
+                    true
+                }
+                R.id.navigationKeypad -> {
+                    binding.viewPager.currentItem = 2
+                    binding.toolBarTitle.text = getString(R.string.keypad)
+                    true
+                }
+                R.id.navigationRecent -> {
+                    binding.viewPager.currentItem = 3
+                    binding.toolBarTitle.text = getString(R.string.recent)
+                    true
+                }
+                R.id.navigationCalendar -> {
+                    binding.viewPager.currentItem = 4
+                    binding.toolBarTitle.text = getString(R.string.calendar)
+                    true
+                }
+                else -> {
+                    false
+                }
             }
         }
+    }
+
+    private fun initFragments() {
+        val fragmentList = listOf(
+            ContactFragment(),
+            MessageFragment(),
+            KeypadFragment(),
+            RecentFragment(),
+            CalendarFragment()
+        )
+        val adapter = FragmentAdapter(this)
+        adapter.fragmentList = fragmentList
+        binding.viewPager.adapter = adapter
+
+
+        binding.viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    binding.bottomNavigation.menu.getItem(position).isChecked = true
+                }
+            }
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,27 +127,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initFragments() {
-        val fragmentList = listOf(
-            ContactFragment(),
-            MessageFragment(),
-            KeypadFragment(),
-            RecentFragment(),
-            CalendarFragment()
-        )
-        val adapter = FragmentAdapter(this)
-        adapter.fragmentList = fragmentList
-        binding.viewPager.adapter = adapter
-        binding.viewPager.registerOnPageChangeCallback(
-            object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    binding.bottomNavigation.menu.getItem(position).isChecked = true
-                }
-            }
-        )
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
-    }
 
 
     private fun initDrawerToggle() {
@@ -132,7 +135,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         toggle.syncState()
     }
 
-    private fun initNavigationItemListener() {
+    private fun initDrawerNavigationItemListener() {
         binding.mainDrawerView.setNavigationItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.item1 -> Toast.makeText(this, "Item1 Clicked", Toast.LENGTH_SHORT).show()

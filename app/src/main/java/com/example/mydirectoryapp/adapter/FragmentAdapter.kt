@@ -1,10 +1,8 @@
 package com.example.mydirectoryapp.adapter
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.mydirectoryapp.fragment.*
 
 class FragmentAdapter (fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     var fragmentList = listOf<Fragment>()
