@@ -13,8 +13,8 @@ https://hanyeop.tistory.com/197
 ★전화, 연락처, 문자 등 각종 인텐트 사용법
 https://fumin.tistory.com/358
 
-
-
+★콘텐트 프로바이더 Uri
+https://choidev-1.tistory.com/58
 
 
 

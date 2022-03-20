@@ -30,11 +30,13 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
         init {
             binding.callButton.setOnClickListener {
                 val tel ="tel:${_contact?.number}"
-                val intent = Intent("android.intent.action.CALL", Uri.parse(tel))
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse(tel))
+                //ACTION_CALL : android.intent.action.CALL
                 context.startActivity(intent)
             }
             binding.root.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/${_contact?.id}"))
+                //ACTION_VIEW : android.intent.action.VIEW
                 context.startActivity(intent)
             }
         }
