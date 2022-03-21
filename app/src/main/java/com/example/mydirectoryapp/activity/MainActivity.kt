@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -45,22 +46,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-
+        //TODO 코드 체크
         requirePermissions(permissionList, permissionRequestCode)
-
         if (hasPermission == true) {
             initFragments()
         }
         else {
-            Toast.makeText(this, "aaaaaaaaaa", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "권한 승인 필요", Toast.LENGTH_SHORT).show()
         }
-
-
-
-
-
-
-
 
         initLinkBottomNaviWithViewPager()
         initDrawerToggle()
@@ -75,7 +68,6 @@ class MainActivity : AppCompatActivity() {
             fragment.getContact()
             contactAdapter.contactList = fragment.contactListAll
             contactAdapter.notifyDataSetChanged()
-
         }
         //[END 공부]
     }
@@ -83,6 +75,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
+        menu?.apply {
+            findItem(R.id.addPerson).isVisible = (binding.viewPager.currentItem == 0)
+            findItem(R.id.filterRecentCalls).isVisible = (binding.viewPager.currentItem ==3)
+        }
         return true
     }
 
@@ -117,31 +113,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initLinkBottomNaviWithViewPager() {
+        val toolbarTitleList = listOf(
+            getString(R.string.contact),
+            getString(R.string.message),
+            getString(R.string.keypad),
+            getString(R.string.recent),
+            getString(R.string.calendar)
+        )
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.navigationContact -> {
                     binding.viewPager.currentItem = 0
-                    binding.toolBarTitle.text = getString(R.string.contact)
+                    binding.toolBarTitle.text = toolbarTitleList[0]
                     true
                 }
                 R.id.navigationMessage -> {
                     binding.viewPager.currentItem = 1
-                    binding.toolBarTitle.text = getString(R.string.message)
+                    binding.toolBarTitle.text = toolbarTitleList[1]
                     true
                 }
                 R.id.navigationKeypad -> {
                     binding.viewPager.currentItem = 2
-                    binding.toolBarTitle.text = getString(R.string.keypad)
+                    binding.toolBarTitle.text = toolbarTitleList[2]
                     true
                 }
                 R.id.navigationRecent -> {
                     binding.viewPager.currentItem = 3
-                    binding.toolBarTitle.text = getString(R.string.recent)
+                    binding.toolBarTitle.text = toolbarTitleList[3]
                     true
                 }
                 R.id.navigationCalendar -> {
                     binding.viewPager.currentItem = 4
-                    binding.toolBarTitle.text = getString(R.string.calendar)
+                    binding.toolBarTitle.text = toolbarTitleList[4]
                     true
                 }
                 else -> {
@@ -153,6 +156,12 @@ class MainActivity : AppCompatActivity() {
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
+
+
+                    invalidateOptionsMenu()
+
+
+                    binding.toolBarTitle.text = toolbarTitleList[position]
                     binding.bottomNavigation.menu.getItem(position).isChecked = true
                 }
             }

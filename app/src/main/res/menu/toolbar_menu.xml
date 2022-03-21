@@ -6,7 +6,15 @@
         android:icon="@drawable/ic_baseline_person_add_person"
         android:title="addPerson"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/filterRecentCalls"
+        android:icon="@drawable/ic_baseline_recent_call_filter"
+        android:title="recentCallFilter"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/menu1"
         android:title="문의하기"/>
+
 </menu>

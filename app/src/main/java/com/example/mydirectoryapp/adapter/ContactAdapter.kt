@@ -6,7 +6,6 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mydirectoryapp.R
@@ -24,8 +23,7 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
 
     inner class MyHolder(val binding: ItemContactBinding): RecyclerView.ViewHolder(binding.root) {
         //[공부]
-//        lateinit var _contact: Contact
-        var _contact: Contact ?= null
+        lateinit var _contact: Contact
 
         init {
             binding.callButton.setOnClickListener {
@@ -37,6 +35,8 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
             binding.root.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/${_contact?.id}"))
                 //ACTION_VIEW : android.intent.action.VIEW
+
+                //TODO 연락처가 삭제된 후 UI 를 다시 그려주는 코드가 필요함
                 context.startActivity(intent)
             }
         }

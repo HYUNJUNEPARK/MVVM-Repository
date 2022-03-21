@@ -84,7 +84,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/profile_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userNumberTextView" />
@@ -93,7 +93,7 @@
         android:id="@+id/userProfileTextView"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:padding="10dp"
         android:text="프로필을 등록해주세요."

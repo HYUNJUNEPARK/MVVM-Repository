@@ -4,9 +4,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.adapter.ContactAdapter
@@ -25,12 +23,17 @@ class ContactFragment : Fragment() {
 
         contactListAll.clear()
         getContact()
-
         initRecyclerView(contactListAll)
         initButtons()
 
         return binding.root
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater
+    }
+
 
     private fun initButtons() {
         binding.simBButton.setOnClickListener {

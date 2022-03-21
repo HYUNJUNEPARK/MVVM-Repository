@@ -17,8 +17,8 @@ https://fumin.tistory.com/358
 https://choidev-1.tistory.com/58
 
 
-
-
+★뷰 바꼈을 때 메뉴 바꾸는 방법
+https://stackoverflow.com/questions/14479749/android-how-to-recreate-action-bar-when-fragment-changed
 
 
 2. 액션바 구현
