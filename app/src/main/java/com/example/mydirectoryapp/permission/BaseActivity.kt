@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 
-abstract class Permission: AppCompatActivity() {
+abstract class BaseActivity: AppCompatActivity() {
     abstract fun permissionGranted(requestCode: Int)
     abstract fun permissionDenied(requestCode: Int)
 

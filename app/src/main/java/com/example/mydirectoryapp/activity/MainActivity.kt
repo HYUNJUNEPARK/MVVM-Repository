@@ -22,8 +22,9 @@ import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.adapter.FragmentAdapter
 import com.example.mydirectoryapp.databinding.ActivityMainBinding
 import com.example.mydirectoryapp.fragment.*
+import com.example.mydirectoryapp.permission.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var resultListener: ActivityResultLauncher<Intent>
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val TAG = "testLog"
         const val permissionRequestCode = 99
+
+
     }
 
     var hasPermission: Boolean ? = false
@@ -70,8 +73,10 @@ class MainActivity : AppCompatActivity() {
             contactAdapter.notifyDataSetChanged()
         }
         //[END 공부]
+
     }
 
+//menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
@@ -96,6 +101,28 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+//permission
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (grantResults.all { it ==  PackageManager.PERMISSION_GRANTED}) {
+            permissionGranted(requestCode)
+        }
+        else {
+            permissionDenied(requestCode)
+        }
+    }
+
+    override fun permissionGranted(requestCode: Int) {
+        hasPermission = true
+        initFragments()
+
+    }
+
+    override fun permissionDenied(requestCode: Int) {
+        hasPermission = false
     }
 
 //Start Function
@@ -157,9 +184,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
 
-
+                    //TODO 확인해 볼 코드
                     invalidateOptionsMenu()
-
 
                     binding.toolBarTitle.text = toolbarTitleList[position]
                     binding.bottomNavigation.menu.getItem(position).isChecked = true
@@ -168,7 +194,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    //Drawer
+//Drawer
     private fun initDrawerToggle() {
         toggle = ActionBarDrawerToggle(this, binding.drawer, R.string.drawer_opend, R.string.drawer_closed)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -185,43 +211,5 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-    }
-
-    //permission
-    private fun requirePermissions(permissionList: Array<String>, requestCode: Int) {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            permissionGranted(requestCode)
-        }
-        else {
-            val isAllPermissionGranted = permissionList.all { permission ->
-                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-            }
-            if (isAllPermissionGranted) {
-                permissionGranted(requestCode)
-            }
-            else {
-                ActivityCompat.requestPermissions(this, permissionList, requestCode)
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (grantResults.all { it ==  PackageManager.PERMISSION_GRANTED}) {
-            permissionGranted(requestCode)
-        }
-        else {
-            permissionDenied(requestCode)
-        }
-    }
-
-    private fun permissionGranted(requestCode: Int) {
-        hasPermission = true
-        initFragments()
-    }
-
-    private fun permissionDenied(requestCode: Int) {
-        hasPermission = false
     }
 }

@@ -21,6 +21,18 @@ https://choidev-1.tistory.com/58
 https://stackoverflow.com/questions/14479749/android-how-to-recreate-action-bar-when-fragment-changed
 
 
+전화 번호 검색 알고리즘 참고 링크
+https://kkh0977.tistory.com/638
+->contain
+
+특정 문자 제거 replace
+https://youngsblog.tistory.com/entry/%ED%8A%B9%EC%A0%95%EB%AC%B8%EC%9E%90-%EC%A0%9C%EA%B1%B0
+
+
+
+정규식 참고 링크
+https://stickode.tistory.com/202
+
 2. 액션바 구현
 -드로어 레이아웃
 -번호추가 아이콘
