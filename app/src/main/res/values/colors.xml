@@ -11,4 +11,9 @@
     <color name="blue">#0606ED</color>
     <color name="green">#1EA51E</color>
     <color name="red">#B62020</color>
+    <color name="transparent">#00ff0000</color>
+    <color name="sky">#6294EF</color>
+    <color name="light_gray">#E0E0E3</color>
+    <color name="light_sky">#84D2F5</color>
+
 </resources>

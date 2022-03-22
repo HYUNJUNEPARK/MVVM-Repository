@@ -28,6 +28,14 @@ https://kkh0977.tistory.com/638
 특정 문자 제거 replace
 https://youngsblog.tistory.com/entry/%ED%8A%B9%EC%A0%95%EB%AC%B8%EC%9E%90-%EC%A0%9C%EA%B1%B0
 
+프래그먼트에서 onclicked 사용
+프래그먼트에서는 xml onclicked 으로 바로 함수 부착이 안됨(액티비티는 가능)
+https://gist.github.com/EmmanuelGuther/1fde5cfbd1cdcd21cd852e3bb5716e02
+
+
+
+
+
 
 
 정규식 참고 링크

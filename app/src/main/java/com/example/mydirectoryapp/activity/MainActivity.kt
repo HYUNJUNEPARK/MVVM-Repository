@@ -3,10 +3,8 @@ package com.example.mydirectoryapp.activity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,14 +12,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.adapter.FragmentAdapter
 import com.example.mydirectoryapp.databinding.ActivityMainBinding
 import com.example.mydirectoryapp.fragment.*
+import com.example.mydirectoryapp.model.Contact
 import com.example.mydirectoryapp.permission.BaseActivity
 
 class MainActivity : BaseActivity() {
@@ -37,12 +34,11 @@ class MainActivity : BaseActivity() {
     companion object {
         val TAG = "testLog"
         const val permissionRequestCode = 99
-
-
+        //TODO 연락처, 키패드에서 공동으로 쓰일 리스트
+        var contactListAll = mutableListOf<Contact>()
     }
 
     var hasPermission: Boolean ? = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,19 +57,7 @@ class MainActivity : BaseActivity() {
         initLinkBottomNaviWithViewPager()
         initDrawerToggle()
         initDrawerNavigationItemListener()
-
-        //[START 공부]
-        resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val adapter = binding.viewPager.adapter as FragmentAdapter
-            val fragment = adapter.fragmentList[0] as ContactFragment
-            val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
-            fragment.contactListAll.clear()
-            fragment.getContact()
-            contactAdapter.contactList = fragment.contactListAll
-            contactAdapter.notifyDataSetChanged()
-        }
-        //[END 공부]
-
+        initResultListener()
     }
 
 //menu
@@ -125,7 +109,19 @@ class MainActivity : BaseActivity() {
         hasPermission = false
     }
 
-//Start Function
+//Start Functions
+    private fun initResultListener() {
+        resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            val adapter = binding.viewPager.adapter as FragmentAdapter
+            val fragment = adapter.fragmentList[0] as ContactFragment
+            val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
+            contactListAll.clear()
+            fragment.getContact()
+            contactAdapter.contactList = contactListAll
+            contactAdapter.notifyDataSetChanged()
+        }
+    }
+
     private fun initFragments() {
         val fragmentList = listOf(
             ContactFragment(),

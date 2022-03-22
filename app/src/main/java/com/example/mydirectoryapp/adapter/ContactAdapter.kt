@@ -22,12 +22,12 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
     }
 
     inner class MyHolder(val binding: ItemContactBinding): RecyclerView.ViewHolder(binding.root) {
-        //[공부]
+        //TODO 공부
         lateinit var _contact: Contact
 
         init {
             binding.callButton.setOnClickListener {
-                val tel ="tel:${_contact?.number}"
+                val tel = "tel:${_contact?.number}"
                 val intent = Intent(Intent.ACTION_CALL, Uri.parse(tel))
                 //ACTION_CALL : android.intent.action.CALL
                 context.startActivity(intent)

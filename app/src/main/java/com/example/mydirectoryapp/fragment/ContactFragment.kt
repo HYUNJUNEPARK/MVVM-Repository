@@ -11,29 +11,26 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.R
+import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
 import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.databinding.FragmentContactBinding
 import com.example.mydirectoryapp.model.Contact
 import java.util.regex.Pattern
 
 class ContactFragment : Fragment() {
-    var contactListAll = mutableListOf<Contact>()
-    var _binding: FragmentContactBinding? = null
-    val binding
-        get() = _binding!!
-    
     companion object {
         //TODO 더 많은 케이스 있음
         const val PATTERN_KOREAN = "^[가-힣]*\$"
         const val PATTERN_NUMBER = "^[0-9]*\$"
         const val PATTERN_ENGLISH = "^[a-zA-Z]*\$"
     }
+    var _binding: FragmentContactBinding? = null
+    val binding
+        get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
-
         contactListAll.clear()
-
 
         getContact()
         initRecyclerView(contactListAll)
@@ -94,7 +91,7 @@ class ContactFragment : Fragment() {
     }
 
     private fun searchLetters(query: String?) {
-        //TODO searchList 가 null 일 경우 빈 페이지보다 다른 UI를 띄워주는게 나을 듯
+        //TODO searchList 가 null 일 경우 빈 페이지보다 안내 UI를 띄워주는게 나을 듯
         val searchList = mutableListOf<Contact>()
         for (contact in contactListAll) {
             var contactName: String ? = null
