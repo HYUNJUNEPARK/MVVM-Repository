@@ -35,6 +35,7 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
             binding.root.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/${_contact?.id}"))
                 //ACTION_VIEW : android.intent.action.VIEW
+
                 //TODO 연락처가 삭제된 후 UI 를 다시 그려주는 코드가 필요함
                 context.startActivity(intent)
             }
