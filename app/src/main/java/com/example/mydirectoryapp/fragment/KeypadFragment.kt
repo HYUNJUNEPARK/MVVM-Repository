@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mydirectoryapp.OnItemClick
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.activity.MainActivity.Companion.TAG
 import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
@@ -18,7 +19,7 @@ import com.example.mydirectoryapp.adapter.KeypadAdapter
 import com.example.mydirectoryapp.databinding.FragmentKeyPadBinding
 import com.example.mydirectoryapp.model.Contact
 
-class KeypadFragment : Fragment(), View.OnClickListener {
+class KeypadFragment : Fragment(), View.OnClickListener, OnItemClick {
     lateinit var binding: FragmentKeyPadBinding
 //    private val binding
 //        get() = _binding!!
@@ -53,6 +54,10 @@ class KeypadFragment : Fragment(), View.OnClickListener {
             R.id.buttonDelete -> deleteButtonClicked()
             R.id.buttonCall -> callButtonClicked()
         }
+    }
+
+    override fun onClick(number: String) {
+        binding.callNumberTextView.text = number
     }
 
 //start functions
@@ -117,7 +122,7 @@ class KeypadFragment : Fragment(), View.OnClickListener {
 
     //TODO ContactFragment initRecyclerView 중복 함수
     private fun initRecyclerView(contactList: MutableList<Contact>) {
-        val adapter = KeypadAdapter(requireContext())
+        val adapter = KeypadAdapter(requireContext(), this )
         adapter.searchList = contactList
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)

@@ -6,13 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mydirectoryapp.OnItemClick
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.databinding.ItemKeypadBinding
 import com.example.mydirectoryapp.model.Contact
 
-class KeypadAdapter(context: Context): RecyclerView.Adapter<KeypadAdapter.MyHolder>() {
+class KeypadAdapter(context: Context, onItemClick: OnItemClick): RecyclerView.Adapter<KeypadAdapter.MyHolder>() {
     var searchList = mutableListOf<Contact>()
     val context: Context = context
+    val onItemClick = onItemClick
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -29,6 +31,9 @@ class KeypadAdapter(context: Context): RecyclerView.Adapter<KeypadAdapter.MyHold
                 //TODO Keypad UI callNumberTextView 에 아이템에 해당하는 번호 삽입
                 //Adapter -> Fragment 데이터 전달 O
                 //Fragment Binding 이 활성화 안되어있음 -> 예외발생
+                val number = _contact.number
+                onItemClick.onClick(number)
+
             }
         }
 
