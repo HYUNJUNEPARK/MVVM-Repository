@@ -9,29 +9,39 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toTopOf="@id/callNumberTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/topDiv2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/callNumberTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/callNumberTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:ellipsize="end"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/topDiv"
+        app:layout_constraintBottom_toTopOf="@id/downDiv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="010-1234-5678" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/topDiv"
+        android:id="@+id/downDiv"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/light_gray"

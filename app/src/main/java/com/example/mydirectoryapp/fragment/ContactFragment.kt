@@ -30,17 +30,21 @@ class ContactFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
-        contactListAll.clear()
-
-        getContact()
-        initRecyclerView(contactListAll)
-        initSimButtons()
-        initSearchView()
 
         return binding.root
     }
 
-    fun getContact() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        contactListAll.clear()
+        getContents()
+        initRecyclerView(contactListAll)
+        initSimButtons()
+        initSearchView()
+    }
+
+    fun getContents() {
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
@@ -54,8 +58,8 @@ class ContactFragment : Fragment() {
             val number = cursor.getString(1)
             val sim = cursor.getString(2)
             val id = cursor.getString(3)
-            val person= Contact(name, number, sim, id)
-            contactListAll.add(person)
+            val contact= Contact(name, number, sim, id)
+            contactListAll.add(contact)
         }
         cursor?.close()
     }

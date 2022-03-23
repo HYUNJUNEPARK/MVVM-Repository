@@ -116,7 +116,7 @@ class MainActivity : BaseActivity() {
             val fragment = adapter.fragmentList[0] as ContactFragment
             val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
             contactListAll.clear()
-            fragment.getContact()
+            fragment.getContents()
             contactAdapter.contactList = contactListAll
             contactAdapter.notifyDataSetChanged()
         }

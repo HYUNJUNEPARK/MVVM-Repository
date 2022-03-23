@@ -41,14 +41,13 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
             }
         }
 
-        fun setContact(contact: Contact) {
+        fun setContents(contact: Contact) {
             _contact = contact
             val charRange = IntRange(0, 0)
             binding.contactTextView.text = contact.name.slice(charRange)
             setContactBallColor(binding.contactTextView)
             binding.nameTextView.text = contact.name
             binding.numberTextView.text = contact.number
-
             when (contact.sim) {
                 "1" -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_b_home_1_blue)
                 "2" -> binding.simImage.background = ContextCompat.getDrawable(context, R.drawable.sim_a_mobile_2_red)
@@ -69,7 +68,7 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
 
     override fun onBindViewHolder(myHolder: MyHolder, position: Int) {
         val contact = contactList[position]
-        myHolder.setContact(contact)
+        myHolder.setContents(contact)
     }
 
     override fun getItemCount(): Int {

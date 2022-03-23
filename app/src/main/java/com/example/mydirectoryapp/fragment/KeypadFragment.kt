@@ -3,25 +3,37 @@ package com.example.mydirectoryapp.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.R
+import com.example.mydirectoryapp.activity.MainActivity.Companion.TAG
+import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
+import com.example.mydirectoryapp.adapter.KeypadAdapter
 import com.example.mydirectoryapp.databinding.FragmentKeyPadBinding
+import com.example.mydirectoryapp.model.Contact
 
 class KeypadFragment : Fragment(), View.OnClickListener {
-    var _binding: FragmentKeyPadBinding? = null
-    private val binding
-        get() = _binding!!
+    lateinit var binding: FragmentKeyPadBinding
+//    private val binding
+//        get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentKeyPadBinding.inflate(inflater, container, false)
-
-        initButton()
+        binding = FragmentKeyPadBinding.inflate(inflater, container, false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initButton()
+        initRecyclerView(contactListAll)
+        initCallNumberView()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onClick(view: View?) {
@@ -56,7 +68,35 @@ class KeypadFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun initCallNumberView() {
+        binding.callNumberTextView.addTextChangedListener(object : TextWatcher{
+            override fun onTextChanged(inputNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Log.d(TAG, "onTextChanged: $inputNumber")
+
+                //TODO ContactFragment SearchNumber 로직과 동일함 간소화 방법 생각해보기
+                val searchList = mutableListOf<Contact>()
+                for(contact in contactListAll) {
+                    var contactNumber: String ? = null
+                    contactNumber = contact.number.replace("-", "")
+                    contactNumber = contactNumber.replace("(", "")
+                    contactNumber = contactNumber.replace(")","")
+                    contactNumber = contactNumber.replace(" ", "")
+                    if (contactNumber.contains(inputNumber!!)) {
+                        searchList.add(contact)
+                    }
+                }
+                initRecyclerView(searchList)
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
+    }
+
     private fun buttonClicked(number: String) {
+        //TODO 전화 번호 포맷 함수
         binding.callNumberTextView.append(number)
     }
 
@@ -70,7 +110,17 @@ class KeypadFragment : Fragment(), View.OnClickListener {
         var numbers = binding.callNumberTextView.text
         if (numbers.isNotEmpty()){
             numbers =  numbers.substring(0, numbers.length -1)
+            //TODO 전화 번호 포맷 함수
             binding.callNumberTextView.text = numbers
         }
+    }
+
+    //TODO ContactFragment initRecyclerView 중복 함수
+    private fun initRecyclerView(contactList: MutableList<Contact>) {
+        val adapter = KeypadAdapter(requireContext())
+        adapter.searchList = contactList
+        binding.recyclerView.adapter = adapter
+        val layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.layoutManager = layoutManager
     }
 }

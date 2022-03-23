@@ -25,6 +25,22 @@ https://stackoverflow.com/questions/14479749/android-how-to-recreate-action-bar-
 https://kkh0977.tistory.com/638
 ->contain
 
+프래그먼트 라이프 사이클 링크
+https://readystory.tistory.com/199
+
+addTextChangedListener 와 TextWatcher 를 이용한 EditText 입력 변화 이벤트 처리  -
+https://mine-it-record.tistory.com/272
+
+
+
+
+
+
+
+
+
+
+
 특정 문자 제거 replace
 https://youngsblog.tistory.com/entry/%ED%8A%B9%EC%A0%95%EB%AC%B8%EC%9E%90-%EC%A0%9C%EA%B1%B0
 
