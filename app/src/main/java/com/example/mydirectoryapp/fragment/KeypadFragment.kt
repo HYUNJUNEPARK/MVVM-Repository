@@ -5,27 +5,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mydirectoryapp.OnItemClick
 import com.example.mydirectoryapp.R
-import com.example.mydirectoryapp.activity.MainActivity.Companion.TAG
 import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
 import com.example.mydirectoryapp.adapter.KeypadAdapter
 import com.example.mydirectoryapp.databinding.FragmentKeyPadBinding
 import com.example.mydirectoryapp.model.Contact
 
-class KeypadFragment : Fragment(), View.OnClickListener {
+class KeypadFragment : Fragment(), View.OnClickListener, OnItemClick {
     lateinit var binding: FragmentKeyPadBinding
-//    private val binding
-//        get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentKeyPadBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -55,6 +51,11 @@ class KeypadFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    //TODO binding 에서 초기화 예러가 뜨지 않는 이유 파악
+    override fun onClick(number: String) {
+        binding.callNumberTextView.text = number
+    }
+
 //start functions
     private fun initButton() {
         val buttonList = arrayOf(
@@ -71,8 +72,6 @@ class KeypadFragment : Fragment(), View.OnClickListener {
     private fun initCallNumberView() {
         binding.callNumberTextView.addTextChangedListener(object : TextWatcher{
             override fun onTextChanged(inputNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d(TAG, "onTextChanged: $inputNumber")
-
                 //TODO ContactFragment SearchNumber 로직과 동일함 간소화 방법 생각해보기
                 val searchList = mutableListOf<Contact>()
                 for(contact in contactListAll) {
@@ -89,7 +88,6 @@ class KeypadFragment : Fragment(), View.OnClickListener {
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
-
             override fun afterTextChanged(p0: Editable?) {
             }
         })
@@ -117,7 +115,7 @@ class KeypadFragment : Fragment(), View.OnClickListener {
 
     //TODO ContactFragment initRecyclerView 중복 함수
     private fun initRecyclerView(contactList: MutableList<Contact>) {
-        val adapter = KeypadAdapter(requireContext())
+        val adapter = KeypadAdapter(requireContext(), this)
         adapter.searchList = contactList
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)

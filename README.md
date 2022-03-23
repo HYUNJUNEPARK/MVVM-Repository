@@ -32,13 +32,9 @@ addTextChangedListener 와 TextWatcher 를 이용한 EditText 입력 변화 이�
 https://mine-it-record.tistory.com/272
 
 
-
-
-
-
-
-
-
+★How to pass values from RecycleAdapter to MainActivity or Other Activities
+https://stackoverflow.com/questions/35008860/how-to-pass-values-from-recycleadapter-to-mainactivity-or-other-activities
+https://dreamaz.tistory.com/241
 
 
 특정 문자 제거 replace
