@@ -1,4 +1,4 @@
-package com.june.counter_mvvm_databinding
+package com.june.simplecounter
 
 import org.junit.Test
 

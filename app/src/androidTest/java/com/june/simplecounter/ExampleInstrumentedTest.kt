@@ -1,4 +1,4 @@
-package com.june.counter_mvvm_databinding
+package com.june.simplecounter
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

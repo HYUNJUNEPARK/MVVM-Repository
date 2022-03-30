@@ -1,22 +1,21 @@
-package com.june.counter_mvvm_databinding
+package com.june.simplecounter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import com.june.counter_mvvm_databinding.databinding.ActivityMainBinding
+import com.june.simplecounter.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mBinding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private val model: MainViewModel by viewModels()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mBinding.lifecycleOwner = this
-        mBinding.viewModel = model
+        binding.lifecycleOwner = this
+        binding.viewModel = model
     }
 }

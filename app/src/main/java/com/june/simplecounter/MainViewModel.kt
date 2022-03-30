@@ -1,10 +1,9 @@
-package com.june.counter_mvvm_databinding
+package com.june.simplecounter
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel() : ViewModel() {
-
     var count = MutableLiveData<Int>()
 
     init {
@@ -18,5 +17,4 @@ class MainViewModel() : ViewModel() {
     fun decrease() {
         count.value = count.value?.minus(1)
     }
-
 }

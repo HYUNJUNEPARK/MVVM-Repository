@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.june.counter_mvvm_databinding.MainViewModel" />
+            type="com.june.simplecounter.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="+"
-            android:onClick="@{()->viewModel.increase()}"
+            android:onClick="@{() -> viewModel.increase()}"
             app:layout_constraintEnd_toStartOf="@+id/minus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_result" />
@@ -39,10 +39,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="-"
-            android:onClick="@{()->viewModel.decrease()}"
+            android:onClick="@{() -> viewModel.decrease()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/plus"
             app:layout_constraintTop_toBottomOf="@+id/txt_result" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
