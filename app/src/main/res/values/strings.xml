@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ViewPager2_BottomNavigation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_a">Fragment A</string>
+    <string name="fragment_b">Fragment B</string>
+    <string name="fragment_c">Fragment C</string>
+    <string name="fragment_d">Fragment D</string>
+    <string name="fragment_e">Fragment E</string>
+</resources>
