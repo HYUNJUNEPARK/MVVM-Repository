@@ -5,10 +5,9 @@
     tools:context=".fragments.FragmentA">
 
     <data>
-
         <variable
             name="viewModel"
-            type="com.example.viewpager2_bottomnavigation.viewmodel.FragmentAViewModel" />
+            type="com.example.viewpager2_bottomnavigation.viewmodel.ViewModelA" />
     </data>
 
 

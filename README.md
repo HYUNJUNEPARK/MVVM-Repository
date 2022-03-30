@@ -6,9 +6,6 @@
 `val viewModel = ViewModelProvider(this@MainActivity).get(MainViewModel::class.java)`
 
 
-
-
-
 (2) by viewModels() 를 이용한 초기화
 -아래 build.gradle 세팅이 끝나면 Activity, Fragment 에 대한 viewModels 확장함수를 이용해 viewModel 을 생성할 수 있음
 cf. viewModels 확장 함수 : ComponentActivity.viewModels(), Fragment.viewModels()
@@ -22,11 +19,6 @@ dependencies {
 ```
 
 `val viewModel: MainViewModel by viewModels()`
-
-
-
-
-
 
 
 (3)by activityViewModels() 를 이용한 초기화

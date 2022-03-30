@@ -9,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.viewpager2_bottomnavigation.activitiy.MainActivity.Companion.TAG
 import com.example.viewpager2_bottomnavigation.databinding.FragmentABinding
-import com.example.viewpager2_bottomnavigation.viewmodel.FragmentAViewModel
+import com.example.viewpager2_bottomnavigation.viewmodel.ViewModelA
 
 class FragmentA : Fragment() {
     private var binding: FragmentABinding? = null
-    private val viewModel: FragmentAViewModel by viewModels()
+    private val viewModel: ViewModelA by viewModels()
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentBinding = FragmentABinding.inflate(inflater, container, false)
@@ -25,10 +25,10 @@ class FragmentA : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, ">>>>>onCreateView: FragmentA")
 
-        initComponents()
-
         binding?.lifecycleOwner = viewLifecycleOwner
         binding?.viewModel = viewModel
+
+        initComponents()
     }
 
     override fun onDestroy() {
@@ -37,6 +37,7 @@ class FragmentA : Fragment() {
         binding = null
     }
 
+//Fragment Lifecycle 확인용
     private fun initComponents() {
         var currentValue = binding?.checkTextView?.text.toString().toInt()
         binding?.checkPlusButton?.setOnClickListener {
