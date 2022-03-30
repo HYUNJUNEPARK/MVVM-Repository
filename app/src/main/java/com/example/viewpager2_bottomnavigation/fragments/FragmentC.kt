@@ -29,7 +29,8 @@ class FragmentC : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         binding = null
-        Log.d(MainActivity.TAG, "onDestroy: FragmentC")
+        Log.d(TAG, "onDestroy: FragmentC")
     }
+
 
 }

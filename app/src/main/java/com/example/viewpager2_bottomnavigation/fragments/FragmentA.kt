@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.viewpager2_bottomnavigation.activitiy.MainActivity.Companion.TAG
 import com.example.viewpager2_bottomnavigation.databinding.FragmentABinding
+import com.example.viewpager2_bottomnavigation.viewmodel.FragmentAViewModel
 
 class FragmentA : Fragment() {
     private var binding: FragmentABinding? = null
+    private val viewModel: FragmentAViewModel by viewModels()
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentBinding = FragmentABinding.inflate(inflater, container, false)
@@ -21,11 +24,28 @@ class FragmentA : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, ">>>>>onCreateView: FragmentA")
+
+        initComponents()
+
+        binding?.lifecycleOwner = viewLifecycleOwner
+        binding?.viewModel = viewModel
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding = null
         Log.d(TAG, "onDestroy: FragmentA")
+        binding = null
+    }
+
+    private fun initComponents() {
+        var currentValue = binding?.checkTextView?.text.toString().toInt()
+        binding?.checkPlusButton?.setOnClickListener {
+            currentValue += 1
+            binding?.checkTextView?.text = currentValue.toString()
+        }
+        binding?.checkMinusButton?.setOnClickListener {
+            currentValue -= 1
+            binding?.checkTextView?.text = currentValue.toString()
+        }
     }
 }
