@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.FragmentE">
 
-
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.viewpager2_bottomnavigation.viewmodel.ViewModelE" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:onClick="@{() -> viewModel.subItem()}"
                 android:textSize="50sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/plusButton"
@@ -48,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+"
+                android:onClick="@{() -> viewModel.addItem()}"
                 android:textSize="50sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
