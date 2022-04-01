@@ -1,3 +1,7 @@
+<img src="https://github.com/HYUNJUNEPARK/ImageRepository/blob/master/androidProgramming/mvvm1.png"  width="200" height="400"/>
+<img src="https://github.com/HYUNJUNEPARK/ImageRepository/blob/master/androidProgramming/mvvm2.png"  width="200" height="400"/>
+---
+
 **(1) ViewModelProvider 를 이용한 초기화**</br>
 -ViewModelProvider 의 파라미터로 MainActivity(View)를 전달하고 그로부터 ViewModel Class 를 넣어 ViewModel 초기화</br>
 (MainActivity 의 라이프 사이클을 따르게 됨)</br>
