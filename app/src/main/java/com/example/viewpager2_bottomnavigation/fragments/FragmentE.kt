@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.viewpager2_bottomnavigation.activitiy.MainActivity
 import com.example.viewpager2_bottomnavigation.activitiy.MainActivity.Companion.TAG
 import com.example.viewpager2_bottomnavigation.adapter.RecyclerAdapterE
@@ -42,14 +41,13 @@ class FragmentE : Fragment() {
     private fun initRecyclerView() {
         val adapter = RecyclerAdapterE(viewModel.itemList)
         binding?.recyclerView?.adapter = adapter
-        val layoutManager = LinearLayoutManager(activity)
-        binding?.recyclerView?.layoutManager = layoutManager
+//        val layoutManager = LinearLayoutManager(activity)
+//        binding?.recyclerView?.layoutManager = layoutManager
     }
 
     private fun initViewModel() {
         binding?.lifecycleOwner = viewLifecycleOwner
         binding?.viewModel = viewModel
-
         val listSizeObserver: Observer<Int> = Observer { _ ->
             binding?.recyclerView?.adapter?.notifyDataSetChanged()
         }

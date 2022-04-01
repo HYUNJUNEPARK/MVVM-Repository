@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.viewpager2_bottomnavigation.databinding.ItemFragmentEBinding
 
 class RecyclerAdapterE(private val itemList: MutableList<String>) : RecyclerView.Adapter<RecyclerAdapterE.MyHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val binding = ItemFragmentEBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyHolder(binding)

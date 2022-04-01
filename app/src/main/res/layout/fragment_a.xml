@@ -10,7 +10,6 @@
             type="com.example.viewpager2_bottomnavigation.viewmodel.ViewModelA" />
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -64,27 +63,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/copyNumberText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{Integer.toString(viewModel.copyValue)}"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@id/copyButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/minusButton" />
+            android:layout_marginBottom="100dp"
+            tools:text="0" />
 
         <Button
             android:id="@+id/plusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:onClick="@{() -> viewModel.updateValue(1)}"
             android:text="UP"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/minusButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/currentNumberText" />
 
@@ -92,23 +81,12 @@
             android:id="@+id/minusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
             android:onClick="@{() -> viewModel.updateValue(2)}"
             android:text="Down"
+            app:layout_constraintBottom_toBottomOf="@id/plusButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/plusButton" />
-
-        <Button
-            android:id="@+id/copyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="46dp"
-            android:onClick="@{() -> viewModel.setValue()}"
-            android:text="copy"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/plusButton"
+            app:layout_constraintTop_toTopOf="@+id/plusButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
