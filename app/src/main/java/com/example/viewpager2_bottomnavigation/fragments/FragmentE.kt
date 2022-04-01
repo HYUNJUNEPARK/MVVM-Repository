@@ -1,6 +1,5 @@
 package com.example.viewpager2_bottomnavigation.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.viewpager2_bottomnavigation.activitiy.MainActivity
 import com.example.viewpager2_bottomnavigation.activitiy.MainActivity.Companion.TAG
 import com.example.viewpager2_bottomnavigation.adapter.RecyclerAdapterE
-import com.example.viewpager2_bottomnavigation.adapter.RecyclerAdapterE.Companion.itemList
 import com.example.viewpager2_bottomnavigation.databinding.FragmentEBinding
 import com.example.viewpager2_bottomnavigation.viewmodel.ViewModelE
 
@@ -31,20 +29,8 @@ class FragmentE : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, ">>>>>onCreateView: FragmentE")
 
-        binding?.lifecycleOwner = viewLifecycleOwner
-        binding?.viewModel = viewModel
-
+        initViewModel()
         initRecyclerView()
-//        initButton()
-
-        viewModel.currentItemListSize.observe(viewLifecycleOwner, Observer {
-
-
-
-
-
-            binding?.recyclerView?.adapter?.notifyDataSetChanged()
-        })
     }
 
     override fun onDestroy() {
@@ -54,10 +40,20 @@ class FragmentE : Fragment() {
     }
 
     private fun initRecyclerView() {
-        val adapter = RecyclerAdapterE()
+        val adapter = RecyclerAdapterE(viewModel.itemList)
         binding?.recyclerView?.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         binding?.recyclerView?.layoutManager = layoutManager
+    }
+
+    private fun initViewModel() {
+        binding?.lifecycleOwner = viewLifecycleOwner
+        binding?.viewModel = viewModel
+
+        val listSizeObserver: Observer<Int> = Observer { _ ->
+            binding?.recyclerView?.adapter?.notifyDataSetChanged()
+        }
+        viewModel.currentItemListSize.observe(viewLifecycleOwner, listSizeObserver)
     }
 
 //MVC
