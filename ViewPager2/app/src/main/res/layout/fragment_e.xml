@@ -7,7 +7,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="viewModelE"
             type="com.example.viewpager2_bottomnavigation.viewmodel.ViewModelE" />
 
         <variable
@@ -46,7 +46,7 @@
                 android:id="@+id/minusButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.subItem()}"
+                android:onClick="@{() -> viewModelE.subItem()}"
                 android:text="-"
                 android:textSize="50sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +58,7 @@
                 android:id="@+id/plusButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.addItem()}"
+                android:onClick="@{() -> viewModelE.addItem()}"
                 android:text="+"
                 android:textSize="50sp"
                 app:layout_constraintBottom_toBottomOf="parent"

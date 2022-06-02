@@ -12,7 +12,7 @@ class RecyclerAdapterE(private val itemList: MutableList<String>) : RecyclerView
         return MyHolder(binding)
     }
 
-    inner class MyHolder(private val _binding: ItemFragmentEBinding) : RecyclerView.ViewHolder(_binding.root) {
+    inner class MyHolder(_binding: ItemFragmentEBinding) : RecyclerView.ViewHolder(_binding.root) {
         val binding = _binding
     }
 

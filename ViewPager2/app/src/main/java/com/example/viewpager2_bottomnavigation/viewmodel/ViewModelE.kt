@@ -5,11 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ViewModelE: ViewModel() {
+    //ItemListSize Observe and then notifyDataSetChanged()
     private val _currentItemListSize = MutableLiveData<Int>()
     val currentItemListSize: LiveData<Int>
         get() = _currentItemListSize
 
-    private var _itemList: MutableList<String> = mutableListOf<String>()
+    private var _itemList = mutableListOf<String>()
     val itemList: MutableList<String>
         get() = _itemList
 

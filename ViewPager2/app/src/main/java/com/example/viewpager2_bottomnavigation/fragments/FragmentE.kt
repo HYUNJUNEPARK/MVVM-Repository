@@ -1,72 +1,40 @@
 package com.example.viewpager2_bottomnavigation.fragments
 
-import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.viewpager2_bottomnavigation.activitiy.MainActivity
-import com.example.viewpager2_bottomnavigation.activitiy.MainActivity.Companion.TAG
+import com.example.viewpager2_bottomnavigation.R
 import com.example.viewpager2_bottomnavigation.adapter.RecyclerAdapterE
 import com.example.viewpager2_bottomnavigation.databinding.FragmentEBinding
 import com.example.viewpager2_bottomnavigation.viewmodel.ViewModelE
+import com.june.musicstreaming.fragment.BaseFragment
 
-class FragmentE : Fragment() {
-    private var binding: FragmentEBinding?= null
-    private val viewModel: ViewModelE by viewModels()
+class FragmentE : BaseFragment<FragmentEBinding>(R.layout.fragment_e) {
+    private val viewModelE: ViewModelE by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val fragmentBinding = FragmentEBinding.inflate(inflater, container, false)
-        binding = fragmentBinding
-        return fragmentBinding.root
-    }
+    override fun initView() {
+        super.initView()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, ">>>>>onCreateView: FragmentE")
-
-        initViewModel()
         initRecyclerView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
-        Log.d(MainActivity.TAG, "onDestroy: FragmentE")
+        initViewModel()
     }
 
     private fun initRecyclerView() {
-        val adapter = RecyclerAdapterE(viewModel.itemList)
-        binding?.recyclerView?.adapter = adapter
-//        val layoutManager = LinearLayoutManager(activity)
-//        binding?.recyclerView?.layoutManager = layoutManager
+        val adapter = RecyclerAdapterE(viewModelE.itemList)
+        binding.recyclerView.adapter = adapter
     }
 
     private fun initViewModel() {
-        binding?.lifecycleOwner = viewLifecycleOwner
-        binding?.viewModel = viewModel
-        val listSizeObserver: Observer<Int> = Observer { _ ->
-            binding?.recyclerView?.adapter?.notifyDataSetChanged()
-        }
-        viewModel.currentItemListSize.observe(viewLifecycleOwner, listSizeObserver)
-    }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModelE = viewModelE
 
-//MVC
-//    private fun initButton() {
-//        binding?.plusButton?.setOnClickListener {
-//            val _number = itemList.size + 1
-//            val number = _number.toString()
-//            itemList.add(number)
-//            binding?.recyclerView?.adapter?.notifyDataSetChanged()
-//        }
-//        binding?.minusButton?.setOnClickListener {
-//            if (itemList.isNotEmpty()) {
-//                itemList.removeAt(itemList.size-1)
-//                binding?.recyclerView?.adapter?.notifyDataSetChanged()
-//            }
-//        }
-//    }
+        //observe LiveData
+        val liveDataObserver: Observer<Int> = Observer { _ ->
+            binding.recyclerView.adapter?.notifyDataSetChanged()
+            binding.recyclerView.scrollToPosition(viewModelE.itemList.size -1)
+        }
+        viewModelE.currentItemListSize.observe(
+            viewLifecycleOwner,
+            liveDataObserver
+        )
+    }
 }

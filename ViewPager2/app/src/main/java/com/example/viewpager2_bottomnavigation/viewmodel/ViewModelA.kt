@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-
 class ViewModelA: ViewModel() {
     private val _currentValue = MutableLiveData<Int>()
-    private val _copyValue = MutableLiveData<Int>()
 
     val currentValue : LiveData<Int>
         get() = _currentValue

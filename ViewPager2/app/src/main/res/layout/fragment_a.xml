@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="viewModel"
+            name="viewModelA"
             type="com.example.viewpager2_bottomnavigation.viewmodel.ViewModelA" />
     </data>
 
@@ -48,29 +48,39 @@
             android:id="@+id/div"
             android:layout_width="0dp"
             android:layout_height="3dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="200dp"
             android:background="@color/black"
             app:layout_constraintBottom_toTopOf="@id/currentNumberText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:text="ViewModel"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/div" />
+
+        <TextView
             android:id="@+id/currentNumberText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{Integer.toString(viewModel.currentValue)}"
+            android:layout_marginBottom="100dp"
+            android:text="@{Integer.toString(viewModelA.currentValue)}"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginBottom="100dp"
             tools:text="0" />
 
         <Button
             android:id="@+id/plusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.updateValue(1)}"
+            android:onClick="@{() -> viewModelA.updateValue(1)}"
             android:text="UP"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/minusButton"
@@ -81,7 +91,7 @@
             android:id="@+id/minusButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewModel.updateValue(2)}"
+            android:onClick="@{() -> viewModelA.updateValue(2)}"
             android:text="Down"
             app:layout_constraintBottom_toBottomOf="@id/plusButton"
             app:layout_constraintEnd_toEndOf="parent"

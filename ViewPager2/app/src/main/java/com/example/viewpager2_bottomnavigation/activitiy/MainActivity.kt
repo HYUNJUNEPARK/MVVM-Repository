@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.example.viewpager2_bottomnavigation.R
 import com.example.viewpager2_bottomnavigation.adapter.FragmentAdapter
@@ -13,14 +14,14 @@ import com.example.viewpager2_bottomnavigation.databinding.ActivityMainBinding
 import com.example.viewpager2_bottomnavigation.fragments.*
 
 class MainActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private lateinit var binding: ActivityMainBinding
     companion object {
         const val TAG = "testLog"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolBar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
@@ -56,11 +57,8 @@ class MainActivity : AppCompatActivity() {
 //fragment
     private fun initFragment() {
         val fragmentList = listOf(
-            FragmentA(),
-            FragmentB(),
-            FragmentC(),
-            FragmentD(),
-            FragmentE()
+            FragmentA(), FragmentB(), FragmentC(),
+            FragmentD(), FragmentE()
         )
         val adapter = FragmentAdapter(this)
         adapter.fragmentList = fragmentList
@@ -69,11 +67,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initLinkBottomNaviWithViewPager2() {
         val toolBarTitleList = listOf(
-            getString(R.string.fragment_a),
-            getString(R.string.fragment_b),
-            getString(R.string.fragment_c),
-            getString(R.string.fragment_d),
-            getString(R.string.fragment_e)
+            getString(R.string.fragment_a), getString(R.string.fragment_b), getString(R.string.fragment_c),
+            getString(R.string.fragment_d), getString(R.string.fragment_e)
         )
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
