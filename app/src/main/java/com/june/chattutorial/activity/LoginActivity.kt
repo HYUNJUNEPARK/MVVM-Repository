@@ -24,10 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        initUserButtonA(this)
-        initUserButtonB(this)
+        binding.loginActivity = this
     }
 
     override fun onResume() {
@@ -37,28 +36,26 @@ class LoginActivity : AppCompatActivity() {
         currentUser = null
     }
 
-    private fun initUserButtonA(activityContext: LoginActivity) {
-        binding.userAButton.setOnClickListener {
-            binding.progressBar.visibility = View.VISIBLE
-            binding.userAButton.isEnabled = false
+    fun userAButtonClicked() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.userAButton.isEnabled = false
 
-            CoroutineScope(Dispatchers.IO).launch {
-                auth.signInWithEmailAndPassword(userA_ID, userA_PW)
-                    .addOnCompleteListener { task ->
-                        binding.progressBar.visibility = View.INVISIBLE
-                        if (task.isSuccessful) {
-                            initCurrentUser()
-                            val intent = Intent(activityContext, MainActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(activityContext, "로그인 에러", Toast.LENGTH_SHORT).show()
-                        }
+        CoroutineScope(Dispatchers.IO).launch {
+            auth.signInWithEmailAndPassword(userA_ID, userA_PW)
+                .addOnCompleteListener { task ->
+                    binding.progressBar.visibility = View.INVISIBLE
+                    if (task.isSuccessful) {
+                        initCurrentUser()
+                        val intent = Intent(applicationContext, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(applicationContext, "로그인 에러", Toast.LENGTH_SHORT).show()
                     }
-            }
+                }
         }
     }
 
-    private fun initUserButtonB(activityContext: LoginActivity) {
+    fun userBButtonClicked() {
         binding.userBButton.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             binding.userBButton.isEnabled = false
@@ -69,11 +66,11 @@ class LoginActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.INVISIBLE
                         if (task.isSuccessful) {
                             initCurrentUser()
-                            val intent = Intent(activityContext, MainActivity::class.java)
+                            val intent = Intent(applicationContext, MainActivity::class.java)
                             startActivity(intent)
                         } else {
                             binding.progressBar.visibility = View.INVISIBLE
-                            Toast.makeText(activityContext, "로그인 에러", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "로그인 에러", Toast.LENGTH_SHORT).show()
                         }
                     }
             }
