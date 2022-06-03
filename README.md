@@ -5,8 +5,10 @@
 
 <br></br>
 <br></br>
----
 
+databinding / LiveData / ViewModel
+
+---
 ><a id = "ref">**참고링크**</a></br>
 
 리사이클러뷰(RecyclerVeiw) xml 뷰 여러개 사용하는 법 (뷰홀더 2개 이상)</br>
