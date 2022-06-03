@@ -15,16 +15,20 @@ import com.june.chattutorial.key.UserIDPW.Companion.userA_ID
 import com.june.chattutorial.key.UserIDPW.Companion.userA_PW
 import com.june.chattutorial.key.UserIDPW.Companion.userB_ID
 import com.june.chattutorial.key.UserIDPW.Companion.userB_PW
+import com.june.chattutorial.network.NetworkConnectionCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val networkCheck: NetworkConnectionCallback by lazy { NetworkConnectionCallback(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+
+        networkCheck.register()
 
         binding.loginActivity = this
     }
@@ -34,6 +38,12 @@ class LoginActivity : AppCompatActivity() {
         binding.userAButton.isEnabled = true
         binding.userBButton.isEnabled = true
         currentUser = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        networkCheck.unregister()
     }
 
     fun userAButtonClicked() {
@@ -48,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
                         initCurrentUser()
                         val intent = Intent(applicationContext, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     } else {
                         Toast.makeText(applicationContext, "로그인 에러", Toast.LENGTH_SHORT).show()
                     }
