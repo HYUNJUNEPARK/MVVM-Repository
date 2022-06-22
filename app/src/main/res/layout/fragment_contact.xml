@@ -67,7 +67,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/userNumberTextView"
             android:layout_width="wrap_content"
-            android:layout_height="14dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="내 프로필(010-1234-3717)"
             android:textSize="12sp"
