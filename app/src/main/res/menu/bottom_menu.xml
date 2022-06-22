@@ -5,23 +5,23 @@
         android:title="@string/contact"
         android:icon="@drawable/ic_navigation_bar_contact"/>
 
-    <item
-        android:id="@+id/navigationMessage"
-        android:title="@string/message"
-        android:icon="@drawable/ic_navigation_bar_message"/>
+<!--    <item-->
+<!--        android:id="@+id/navigationMessage"-->
+<!--        android:title="@string/message"-->
+<!--        android:icon="@drawable/ic_navigation_bar_message"/>-->
 
     <item
         android:id="@+id/navigationKeypad"
         android:title="@string/keypad"
         android:icon="@drawable/ic_navigation_bar_keypad"/>
 
-    <item
-        android:id="@+id/navigationRecent"
-        android:title="@string/recent"
-        android:icon="@drawable/ic_navigation_bar_recent"/>
+<!--    <item-->
+<!--        android:id="@+id/navigationRecent"-->
+<!--        android:title="@string/recent"-->
+<!--        android:icon="@drawable/ic_navigation_bar_recent"/>-->
 
-    <item
-        android:id="@+id/navigationCalendar"
-        android:title="@string/calendar"
-        android:icon="@drawable/ic_navigation_bar_calendar"/>
+<!--    <item-->
+<!--        android:id="@+id/navigationCalendar"-->
+<!--        android:title="@string/calendar"-->
+<!--        android:icon="@drawable/ic_navigation_bar_calendar"/>-->
 </menu>

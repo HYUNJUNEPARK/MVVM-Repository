@@ -15,9 +15,9 @@ class FragmentAdapter (fragmentActivity: FragmentActivity) : FragmentStateAdapte
        return when (position) {
            0 -> fragmentList[0]
            1 -> fragmentList[1]
-           2 -> fragmentList[2]
-           3 -> fragmentList[3]
-           else -> fragmentList[4]
+//           2 -> fragmentList[2]
+//           3 -> fragmentList[3]
+           else -> fragmentList[0]
        }
     }
 }

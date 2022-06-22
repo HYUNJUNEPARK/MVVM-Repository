@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.OnItemClick
 import com.example.mydirectoryapp.R
-import com.example.mydirectoryapp.activity.MainActivity.Companion.TAG
 import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
 import com.example.mydirectoryapp.adapter.KeypadAdapter
 import com.example.mydirectoryapp.databinding.FragmentKeyPadBinding
@@ -76,7 +74,6 @@ class KeypadFragment : Fragment(), View.OnClickListener, OnItemClick {
     private fun initCallNumberView() {
         binding.callNumberTextView.addTextChangedListener(object : TextWatcher{
             override fun onTextChanged(inputNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d(TAG, "onTextChanged: $inputNumber")
 
                 //TODO ContactFragment SearchNumber 로직과 동일함 간소화 방법 생각해보기
                 val searchList = mutableListOf<Contact>()

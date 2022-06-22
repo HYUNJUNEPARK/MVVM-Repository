@@ -33,7 +33,6 @@ class KeypadAdapter(context: Context, onItemClick: OnItemClick): RecyclerView.Ad
                 //Fragment Binding 이 활성화 안되어있음 -> 예외발생
                 val number = _contact.number
                 onItemClick.onClick(number)
-
             }
         }
 

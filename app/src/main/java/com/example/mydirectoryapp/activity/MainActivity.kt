@@ -1,6 +1,5 @@
 package com.example.mydirectoryapp.activity
 
-import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -12,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.adapter.ContactAdapter
@@ -19,46 +19,43 @@ import com.example.mydirectoryapp.adapter.FragmentAdapter
 import com.example.mydirectoryapp.databinding.ActivityMainBinding
 import com.example.mydirectoryapp.fragment.*
 import com.example.mydirectoryapp.model.Contact
-import com.example.mydirectoryapp.permission.BaseActivity
+import com.example.mydirectoryapp.permission.Permission
 
-class MainActivity : BaseActivity() {
+class MainActivity: AppCompatActivity() {
+    companion object {
+        //TODO 연락처, 키패드에서 공동으로 쓰일 리스트
+        var contactListAll = mutableListOf<Contact>()
+    }
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var resultListener: ActivityResultLauncher<Intent>
 
-    private val permissionList: Array<String> = arrayOf(
-        Manifest.permission.READ_CONTACTS,
-        Manifest.permission.CALL_PHONE
-    )
-
-    companion object {
-        val TAG = "testLog"
-        const val permissionRequestCode = 99
-        //TODO 연락처, 키패드에서 공동으로 쓰일 리스트
-        var contactListAll = mutableListOf<Contact>()
-    }
-
-    var hasPermission: Boolean ? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
-        //TODO 코드 체크
-        requirePermissions(permissionList, permissionRequestCode)
-        if (hasPermission == true) {
-            initFragments()
-        }
-        else {
-            Toast.makeText(this, "권한 승인 필요", Toast.LENGTH_SHORT).show()
-        }
+        Permission(this).checkPermissions()
 
+        initFragments()
         initLinkBottomNaviWithViewPager()
         initDrawerToggle()
         initDrawerNavigationItemListener()
         initResultListener()
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (grantResults.all { it ==  PackageManager.PERMISSION_GRANTED}) {
+            Permission(this).permissionGranted()
+        }
+        else {
+            Permission(this).permissionDenied()
+        }
+    }
+
 
 //menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -87,27 +84,7 @@ class MainActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-//permission
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (grantResults.all { it ==  PackageManager.PERMISSION_GRANTED}) {
-            permissionGranted(requestCode)
-        }
-        else {
-            permissionDenied(requestCode)
-        }
-    }
-
-    override fun permissionGranted(requestCode: Int) {
-        hasPermission = true
-        initFragments()
-
-    }
-
-    override fun permissionDenied(requestCode: Int) {
-        hasPermission = false
-    }
 
 //Start Functions
     private fun initResultListener() {
@@ -125,10 +102,7 @@ class MainActivity : BaseActivity() {
     private fun initFragments() {
         val fragmentList = listOf(
             ContactFragment(),
-            MessageFragment(),
             KeypadFragment(),
-            RecentFragment(),
-            CalendarFragment()
         )
         val adapter = FragmentAdapter(this)
         adapter.fragmentList = fragmentList
@@ -138,10 +112,7 @@ class MainActivity : BaseActivity() {
     private fun initLinkBottomNaviWithViewPager() {
         val toolbarTitleList = listOf(
             getString(R.string.contact),
-            getString(R.string.message),
-            getString(R.string.keypad),
-            getString(R.string.recent),
-            getString(R.string.calendar)
+            getString(R.string.keypad)
         )
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
@@ -150,24 +121,9 @@ class MainActivity : BaseActivity() {
                     binding.toolBarTitle.text = toolbarTitleList[0]
                     true
                 }
-                R.id.navigationMessage -> {
-                    binding.viewPager.currentItem = 1
-                    binding.toolBarTitle.text = toolbarTitleList[1]
-                    true
-                }
                 R.id.navigationKeypad -> {
                     binding.viewPager.currentItem = 2
-                    binding.toolBarTitle.text = toolbarTitleList[2]
-                    true
-                }
-                R.id.navigationRecent -> {
-                    binding.viewPager.currentItem = 3
-                    binding.toolBarTitle.text = toolbarTitleList[3]
-                    true
-                }
-                R.id.navigationCalendar -> {
-                    binding.viewPager.currentItem = 4
-                    binding.toolBarTitle.text = toolbarTitleList[4]
+                    binding.toolBarTitle.text = toolbarTitleList[1]
                     true
                 }
                 else -> {
