@@ -23,13 +23,11 @@ import com.example.mydirectoryapp.permission.Permission
 
 class MainActivity: AppCompatActivity() {
     companion object {
-        //TODO 연락처, 키패드에서 공동으로 쓰일 리스트
         var contactListAll = mutableListOf<Contact>()
     }
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var toggle: ActionBarDrawerToggle
     lateinit var resultListener: ActivityResultLauncher<Intent>
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +53,6 @@ class MainActivity: AppCompatActivity() {
             Permission(this).permissionDenied()
         }
     }
-
 
 //menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -84,8 +81,6 @@ class MainActivity: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-
 //Start Functions
     private fun initResultListener() {
         resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -93,7 +88,7 @@ class MainActivity: AppCompatActivity() {
             val fragment = adapter.fragmentList[0] as ContactFragment
             val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
             contactListAll.clear()
-            fragment.getContents()
+            fragment.initDeviceContact()
             contactAdapter.contactList = contactListAll
             contactAdapter.notifyDataSetChanged()
         }

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mydirectoryapp.OnItemClick
+import com.example.mydirectoryapp.util.OnItemClick
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.databinding.ItemKeypadBinding
 import com.example.mydirectoryapp.model.Contact
@@ -15,7 +15,6 @@ class KeypadAdapter(context: Context, onItemClick: OnItemClick): RecyclerView.Ad
     var searchList = mutableListOf<Contact>()
     val context: Context = context
     val onItemClick = onItemClick
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val binding = ItemKeypadBinding.inflate(LayoutInflater.from(parent.context), parent, false)

@@ -15,11 +15,11 @@ import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
 import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.databinding.FragmentContactBinding
 import com.example.mydirectoryapp.model.Contact
+import com.example.mydirectoryapp.util.Search
 import java.util.regex.Pattern
 
 class ContactFragment : Fragment() {
     companion object {
-        //TODO 더 많은 케이스 있음
         const val PATTERN_KOREAN = "^[가-힣]*\$"
         const val PATTERN_NUMBER = "^[0-9]*\$"
         const val PATTERN_ENGLISH = "^[a-zA-Z]*\$"
@@ -37,13 +37,13 @@ class ContactFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         contactListAll.clear()
-        getContents()
+        initDeviceContact()
         initRecyclerView(contactListAll)
         initSimButtons()
         initSearchView()
     }
 
-    fun getContents() {
+    fun initDeviceContact() {
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
@@ -71,10 +71,12 @@ class ContactFragment : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
     }
 
+
+
     private fun initSearchView() {
         val searchView = binding.searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
+            override fun onQueryTextSubmit(query: String): Boolean {
                 if (Pattern.matches(PATTERN_KOREAN, query) || Pattern.matches(PATTERN_ENGLISH, query)) {
                     searchLetters(query)
                 }
@@ -82,8 +84,7 @@ class ContactFragment : Fragment() {
                     searchNumber(query)
                 }
                 else {
-                    val context = requireContext()
-                    Toast.makeText(context, getString(R.string.wrong_input_type_message), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.wrong_input_type_message), Toast.LENGTH_SHORT).show()
                 }
                 return true
             }
@@ -93,33 +94,25 @@ class ContactFragment : Fragment() {
         })
     }
 
-    private fun searchLetters(query: String?) {
-        //TODO searchList 가 null 일 경우 빈 페이지보다 안내 UI를 띄워주는게 나을 듯
+    private fun searchLetters(query: String) {
         val searchList = mutableListOf<Contact>()
-        for (contact in contactListAll) {
-            var contactName: String ? = null
-            contactName = contact.name.replace(" ", "")
-            if (contactName.contains(query.toString(), true)) {
-                searchList.add(contact)
-            }
-        }
-        initRecyclerView(searchList)
+        Search().letters(searchList, query)
+        initRecyclerView(searchList) //refresh
     }
 
     private fun searchNumber(query: String?) {
         val searchList = mutableListOf<Contact>()
-        for (contact in contactListAll) {
-            var contactNumber: String ? = null
-            contactNumber = contact.number.replace("-", "")
-            contactNumber = contactNumber.replace("(", "")
-            contactNumber = contactNumber.replace(")","")
-            contactNumber = contactNumber.replace(" ", "")
-            if (contactNumber.contains(query.toString())) {
-                searchList.add(contact)
-            }
-        }
-        initRecyclerView(searchList)
+        Search().phoneNumber(searchList, query!!)
+        initRecyclerView(searchList) //refresh
     }
+
+
+
+
+
+
+
+
 
     private fun initSimButtons() {
         binding.allButton.setOnClickListener {
@@ -147,4 +140,7 @@ class ContactFragment : Fragment() {
             initRecyclerView(contactListSimElse)
         }
     }
+
+
+
 }

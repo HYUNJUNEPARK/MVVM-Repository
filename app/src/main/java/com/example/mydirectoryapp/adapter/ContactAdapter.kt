@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.databinding.ItemContactBinding
 import com.example.mydirectoryapp.model.Contact
+import com.example.mydirectoryapp.util.Call
 
 class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHolder>() {
     var contactList = mutableListOf<Contact>()
@@ -27,14 +28,15 @@ class ContactAdapter(context: Context): RecyclerView.Adapter<ContactAdapter.MyHo
 
         init {
             binding.callButton.setOnClickListener {
-                val tel = "tel:${_contact?.number}"
-                val intent = Intent(Intent.ACTION_CALL, Uri.parse(tel))
-                //ACTION_CALL : android.intent.action.CALL
-                context.startActivity(intent)
+                val phoneNumber = "tel:${_contact?.number}"
+                Call(context).call(phoneNumber)
             }
+
             binding.root.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people/${_contact?.id}"))
-                //ACTION_VIEW : android.intent.action.VIEW
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("content://contacts/people/${_contact?.id}")
+                )
 
                 //TODO 연락처가 삭제된 후 UI 를 다시 그려주는 코드가 필요함
                 context.startActivity(intent)
