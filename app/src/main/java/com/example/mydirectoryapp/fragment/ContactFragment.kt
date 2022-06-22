@@ -91,6 +91,8 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
         initRecyclerView(searchList) //refresh
     }
 
+    //TODO VM 써야하는 이유가 생김!
+    //TODO contactListAll 을 VM 에서 관리 시키고 싶음
     private fun initSimButtons() {
         binding.allButton.setOnClickListener {
             initRecyclerView(contactListAll)

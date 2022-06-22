@@ -81,7 +81,6 @@ class MainActivity: AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-//Start Functions
     private fun initResultListener() {
         resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             val adapter = binding.viewPager.adapter as FragmentAdapter
@@ -106,8 +105,7 @@ class MainActivity: AppCompatActivity() {
 
     private fun initLinkBottomNaviWithViewPager() {
         val toolbarTitleList = listOf(
-            getString(R.string.contact),
-            getString(R.string.keypad)
+            getString(R.string.contact), getString(R.string.keypad)
         )
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
@@ -131,7 +129,8 @@ class MainActivity: AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
 
-                    //TODO 확인해 볼 코드
+                    //fragment 에 따라 메뉴를 바꿔주기 위해서 추가
+                    //메뉴 전체를 무효화하여 다음번 메뉴를 열 때 onCreateOptionsMenu 가 다시 호출
                     invalidateOptionsMenu()
 
                     binding.toolBarTitle.text = toolbarTitleList[position]
