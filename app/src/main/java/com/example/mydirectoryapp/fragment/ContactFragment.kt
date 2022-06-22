@@ -1,14 +1,9 @@
 package com.example.mydirectoryapp.fragment
 
 import android.net.Uri
-import android.os.Bundle
 import android.provider.ContactsContract
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
@@ -18,23 +13,15 @@ import com.example.mydirectoryapp.model.Contact
 import com.example.mydirectoryapp.util.Search
 import java.util.regex.Pattern
 
-class ContactFragment : Fragment() {
+class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_contact) {
     companion object {
         const val PATTERN_KOREAN = "^[가-힣]*\$"
         const val PATTERN_NUMBER = "^[0-9]*\$"
         const val PATTERN_ENGLISH = "^[a-zA-Z]*\$"
     }
-    var _binding: FragmentContactBinding? = null
-    val binding
-        get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentContactBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView() {
+        super.initView()
 
         contactListAll.clear()
         initDeviceContact()
@@ -71,8 +58,6 @@ class ContactFragment : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
     }
 
-
-
     private fun initSearchView() {
         val searchView = binding.searchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -106,14 +91,6 @@ class ContactFragment : Fragment() {
         initRecyclerView(searchList) //refresh
     }
 
-
-
-
-
-
-
-
-
     private fun initSimButtons() {
         binding.allButton.setOnClickListener {
             initRecyclerView(contactListAll)
@@ -140,7 +117,4 @@ class ContactFragment : Fragment() {
             initRecyclerView(contactListSimElse)
         }
     }
-
-
-
 }

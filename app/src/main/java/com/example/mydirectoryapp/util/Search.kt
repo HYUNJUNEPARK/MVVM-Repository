@@ -4,10 +4,6 @@ import com.example.mydirectoryapp.activity.MainActivity
 import com.example.mydirectoryapp.model.Contact
 
 class Search {
-
-
-
-
     fun phoneNumber(searchList: MutableList<Contact>, inputNumber: String) {
         for(contact in MainActivity.contactListAll) {
             var contactNumber: String ? = null
