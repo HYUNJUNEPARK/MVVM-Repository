@@ -2,18 +2,25 @@ package com.example.mydirectoryapp.fragment
 
 import android.net.Uri
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
 import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.databinding.FragmentContactBinding
 import com.example.mydirectoryapp.model.Contact
+import com.example.mydirectoryapp.util.DeviceInfo
 import com.example.mydirectoryapp.util.Search
+import com.example.mydirectoryapp.vm.ContactVM
 import java.util.regex.Pattern
+import kotlin.system.measureTimeMillis
 
 class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_contact) {
+    private val contactVM: ContactVM by viewModels()
+
     companion object {
         const val PATTERN_KOREAN = "^[가-힣]*\$"
         const val PATTERN_NUMBER = "^[0-9]*\$"
@@ -24,10 +31,12 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
         super.initView()
 
         contactListAll.clear()
+
         initDeviceContact()
         initRecyclerView(contactListAll)
         initSimButtons()
         initSearchView()
+        initDeviceInfo()
     }
 
     fun initDeviceContact() {
@@ -51,8 +60,10 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
     }
 
     private fun initRecyclerView(contactList: MutableList<Contact>) {
+        //TODO 뷰모델안에 있는 연락처 리스트로 초기화 해줌
         val adapter = ContactAdapter(requireContext())
         adapter.contactList = contactList
+
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
@@ -91,8 +102,13 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
         initRecyclerView(searchList) //refresh
     }
 
+    private fun initDeviceInfo() {
+        binding.userNumberTextView.text = "내 프로필(${DeviceInfo(requireContext()).devicePhoneNumber()})"
+    }
+
     //TODO VM 써야하는 이유가 생김!
     //TODO contactListAll 을 VM 에서 관리 시키고 싶음
+    //VM 으로 이동시킴 ? -> 굳이 ?
     private fun initSimButtons() {
         binding.allButton.setOnClickListener {
             initRecyclerView(contactListAll)

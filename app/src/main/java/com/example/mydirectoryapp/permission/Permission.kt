@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
 class Permission(private val context: Context) {
@@ -16,7 +17,9 @@ class Permission(private val context: Context) {
     private val permissionRequestCode = 999
     private val permissionsArray: Array<String> = arrayOf(
         Manifest.permission.READ_CONTACTS,
-        Manifest.permission.CALL_PHONE
+        Manifest.permission.CALL_PHONE,
+        Manifest.permission.READ_PHONE_NUMBERS
+
     )
 
     //TODO 권한 요청이 필요한 시점에서 호출해 사용
@@ -44,7 +47,7 @@ class Permission(private val context: Context) {
 
     fun permissionGranted() {
         //TODO 모든 권한 승인 시 상황에 맞는 코드 작성
-        //Toast.makeText(context, "모든 권한 승인", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "모든 권한 승인 완료", Toast.LENGTH_SHORT).show()
     }
 
     fun permissionDenied() {

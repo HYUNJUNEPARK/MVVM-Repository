@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -20,6 +21,7 @@ import com.example.mydirectoryapp.databinding.ActivityMainBinding
 import com.example.mydirectoryapp.fragment.*
 import com.example.mydirectoryapp.model.Contact
 import com.example.mydirectoryapp.permission.Permission
+import com.example.mydirectoryapp.util.DeviceInfo
 
 class MainActivity: AppCompatActivity() {
     companion object {
@@ -34,6 +36,7 @@ class MainActivity: AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
 
+        //TODO 앱 처음 설치 시 권한 허가 창만 나오고 뷰가 안그려지는 문제 있음
         Permission(this).checkPermissions()
 
         initFragments()
@@ -43,9 +46,9 @@ class MainActivity: AppCompatActivity() {
         initResultListener()
     }
 
+//Permission
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         if (grantResults.all { it ==  PackageManager.PERMISSION_GRANTED}) {
             Permission(this).permissionGranted()
         }
@@ -54,13 +57,13 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
-//menu
+//Menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.toolbar_menu, menu)
         menu?.apply {
             findItem(R.id.addPerson).isVisible = (binding.viewPager.currentItem == 0)
-            findItem(R.id.filterRecentCalls).isVisible = (binding.viewPager.currentItem ==3)
+            findItem(R.id.filterRecentCalls).isVisible = (binding.viewPager.currentItem == 1)
         }
         return true
     }
@@ -93,6 +96,7 @@ class MainActivity: AppCompatActivity() {
         }
     }
 
+//Fragment
     private fun initFragments() {
         val fragmentList = listOf(
             ContactFragment(),
@@ -103,6 +107,7 @@ class MainActivity: AppCompatActivity() {
         binding.viewPager.adapter = adapter
     }
 
+//ViewPager2
     private fun initLinkBottomNaviWithViewPager() {
         val toolbarTitleList = listOf(
             getString(R.string.contact), getString(R.string.keypad)
