@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mydirectoryapp.R
 import com.example.mydirectoryapp.activity.MainActivity.Companion.contactListAll
@@ -16,7 +17,6 @@ import com.example.mydirectoryapp.util.DeviceInfo
 import com.example.mydirectoryapp.util.Search
 import com.example.mydirectoryapp.vm.ContactVM
 import java.util.regex.Pattern
-import kotlin.system.measureTimeMillis
 
 class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_contact) {
     private val contactVM: ContactVM by viewModels()
@@ -32,14 +32,44 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
 
         contactListAll.clear()
 
-        initDeviceContact()
+        initMyContact()
         initRecyclerView(contactListAll)
         initSimButtons()
         initSearchView()
         initDeviceInfo()
+        initVM()
+        Log.d("testLog", "initViewssss")
     }
 
-    fun initDeviceContact() {
+    private fun initVM() {
+        //TODO
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.contactVm = contactVM
+
+        contactVM.checker.observe(
+            viewLifecycleOwner,
+            Observer {
+//                contactListAll.clear()
+//                initMyContact()
+//                binding.recyclerView.adapter?.notifyDataSetChanged()
+                Log.d("testLog", "liveDataObserver: refresh")
+
+
+
+
+            }
+        )
+    }
+
+    //TODO 원하는 기느은 구현 되었으나 불필요하게 notifydatasetchanged 가 발생!!
+    override fun onResume() {
+        super.onResume()
+
+//        contactListAll.clear()
+//        initMyContact()
+    }
+
+    private fun initMyContact() {
         val uri : Uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val contactArray = arrayOf(
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
@@ -60,10 +90,8 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
     }
 
     private fun initRecyclerView(contactList: MutableList<Contact>) {
-        //TODO 뷰모델안에 있는 연락처 리스트로 초기화 해줌
         val adapter = ContactAdapter(requireContext())
         adapter.contactList = contactList
-
         binding.recyclerView.adapter = adapter
         val layoutManager = LinearLayoutManager(activity)
         binding.recyclerView.layoutManager = layoutManager
@@ -102,6 +130,7 @@ class ContactFragment : BaseFragment<FragmentContactBinding>(R.layout.fragment_c
         initRecyclerView(searchList) //refresh
     }
 
+    //TODO XML 로 옮기기
     private fun initDeviceInfo() {
         binding.userNumberTextView.text = "내 프로필(${DeviceInfo(requireContext()).devicePhoneNumber()})"
     }

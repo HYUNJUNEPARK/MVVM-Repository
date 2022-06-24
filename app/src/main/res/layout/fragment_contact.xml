@@ -7,6 +7,10 @@
         <variable
             name="contactFragment"
             type="com.example.mydirectoryapp.fragment.ContactFragment" />
+
+        <variable
+            name="contactVm"
+            type="com.example.mydirectoryapp.vm.ContactVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

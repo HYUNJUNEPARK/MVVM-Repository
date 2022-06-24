@@ -4,24 +4,21 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.example.mydirectoryapp.R
-import com.example.mydirectoryapp.adapter.ContactAdapter
 import com.example.mydirectoryapp.adapter.FragmentAdapter
 import com.example.mydirectoryapp.databinding.ActivityMainBinding
-import com.example.mydirectoryapp.fragment.*
+import com.example.mydirectoryapp.fragment.ContactFragment
+import com.example.mydirectoryapp.fragment.KeypadFragment
 import com.example.mydirectoryapp.model.Contact
 import com.example.mydirectoryapp.permission.Permission
-import com.example.mydirectoryapp.util.DeviceInfo
+import com.example.mydirectoryapp.vm.ContactVM
 
 class MainActivity: AppCompatActivity() {
     companion object {
@@ -29,12 +26,12 @@ class MainActivity: AppCompatActivity() {
     }
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     lateinit var toggle: ActionBarDrawerToggle
-    lateinit var resultListener: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolBar)
+
 
         //TODO 앱 처음 설치 시 권한 허가 창만 나오고 뷰가 안그려지는 문제 있음
         Permission(this).checkPermissions()
@@ -43,7 +40,6 @@ class MainActivity: AppCompatActivity() {
         initLinkBottomNaviWithViewPager()
         initDrawerToggle()
         initDrawerNavigationItemListener()
-        initResultListener()
     }
 
 //Permission
@@ -73,8 +69,11 @@ class MainActivity: AppCompatActivity() {
         when(item.itemId) {
             R.id.menu1 -> Toast.makeText(this, getString(R.string.test_message), Toast.LENGTH_SHORT).show()
             R.id.addPerson -> {
-                var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-                resultListener.launch(intent)
+                //TODO 연락처 추가 액티비티
+//                var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+//                startActivity(intent)
+
+                ContactVM().addContactIntent(this)
             }
         }
         //DrawerLayout-NavigationView Event
@@ -82,18 +81,6 @@ class MainActivity: AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun initResultListener() {
-        resultListener = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val adapter = binding.viewPager.adapter as FragmentAdapter
-            val fragment = adapter.fragmentList[0] as ContactFragment
-            val contactAdapter = fragment.binding.recyclerView.adapter as ContactAdapter
-            contactListAll.clear()
-            fragment.initDeviceContact()
-            contactAdapter.contactList = contactListAll
-            contactAdapter.notifyDataSetChanged()
-        }
     }
 
 //Fragment
@@ -110,7 +97,8 @@ class MainActivity: AppCompatActivity() {
 //ViewPager2
     private fun initLinkBottomNaviWithViewPager() {
         val toolbarTitleList = listOf(
-            getString(R.string.contact), getString(R.string.keypad)
+            getString(R.string.contact),
+            getString(R.string.keypad)
         )
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
