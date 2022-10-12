@@ -16,6 +16,10 @@ Architecture
 
 
 -**(3)LiveData**</br>
+수명 주기를 인식하는 관찰 가능한 데이터 홀더 클래스</br>
+모든 유형의 데이터에 사용할 수 있고 데이터를 보유할 수 있는 래퍼</br>
+LiveData 객체에서 보유한 데이터가 변경되면 관찰자에 알림이 제공됨</br>
+LiveData 에 관찰자를 연결하면 관찰자는 LifecycleOwner(일반적으로 액티비티나 프래그먼트)와 연결됨</br>
 
 
 -**(4)Room**</br>
@@ -25,7 +29,7 @@ Architecture
 
 
 ViewModel 추가하기
---------------
+===================================
 (1)의존성 추가
 ```kotlin
 // ViewModel
@@ -38,9 +42,55 @@ class GameViewModel : ViewModel() {
 }
 ```
 
-(3)ViewModel을 프래그먼트에 연결하기
+(3)ViewModel 를 프래그먼트에 연결하기
 ```kotlin
 private val viewModel: GameViewModel by viewModels()
+```
+
+LiveData 추가하기
+===================================
+
+`private val _currentScrambledWord = MutableLiveData<String>()`</br>
+-MutableLiveData : LiveData의 변경 가능한 버전</br>
+-LiveData/MutableLiveData 객체의 값은 동일하게 유지되고 이 객체에 저장된 데이터만 변경되기 때문에 변수 유형은 val 로 선언</br>
+-LiveData 객체 내의 데이터에 엑세스하려면 `value` 속성을 사용</br>
+`_currentScrambledWord.value = String(tempWord)`</br>
+
+
+LiveData 객체에 관찰자 연결하기
+===================================
+```kotlin
+// Observe the scrambledCharArray LiveData, passing in the LifecycleOwner and the observer.
+viewModel.currentScrambledWord.observe(
+   viewLifecycleOwner,
+   { newWord ->
+       binding.textViewUnscrambledWord.text = newWord
+   })
+
+viewModel.currentScrambledWord.observe(viewLifecycleOwner) { newWord ->
+    binding.textViewUnscrambledWord.text = newWord
+}
+```
+
+
+dataBinding 사용하기
+===================================
+```kotlin
+//build.gradle(Module)
+buildFeatures {
+   dataBinding = true
+}
+
+//...
+
+plugins {
+    //id 'com.android.application'
+    //id 'kotlin-android'
+    //id 'kotlin-kapt'
+}
+
+//binding 변수의 인스턴스화
+binding = DataBindingUtil.inflate(inflater, R.layout.game_fragment, container, false)
 ```
 
 참고 링크

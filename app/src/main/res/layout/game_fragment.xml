@@ -25,6 +25,9 @@
         <variable
             name="maxNoOfWords"
             type="int" />
+        <variable
+            name="gameFragment"
+            type="com.example.android.unscramble.ui.game.GameFragment" />
     </data>
 
     <ScrollView
@@ -44,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_padding"
                 android:layout_marginEnd="@dimen/default_padding"
+                android:onClick="@{()->gameFragment.onSkipWord()}"
                 android:text="@string/skip"
                 app:layout_constraintBaseline_toBaselineOf="@+id/submit"
                 app:layout_constraintEnd_toStartOf="@+id/submit"
@@ -55,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@string/submit"
+                android:onClick="@{()->gameFragment.onSubmitWord()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/skip"
                 app:layout_constraintTop_toBottomOf="@+id/textField" />
