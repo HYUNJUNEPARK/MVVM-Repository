@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Counter_MVVM_DataBinding">
         <activity
-            android:name="com.june.simplecounter.MainActivity"
+            android:name="com.june.simplecounter.ui_layer.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

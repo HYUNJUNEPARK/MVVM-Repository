@@ -1,11 +1,11 @@
-package com.june.simplecounter
+package com.june.simplecounter.ui_layer
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.june.simplecounter.R
 import com.june.simplecounter.databinding.ActivityMainBinding
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
