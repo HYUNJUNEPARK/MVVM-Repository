@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="countViewModel"
             type="com.june.simplecounter.ui_layer.CountViewModel" />
@@ -73,6 +74,7 @@
             app:layout_constraintTop_toBottomOf="@id/countLayout" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,26 +93,33 @@
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="load"
                 android:onClick="@{()->userInfoViewModel.fetchUserInfo()}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="load"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv1" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ScrollView
-                app:layout_constraintTop_toBottomOf="@id/button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button">
+
                 <TextView
-                    android:text="@{userInfoViewModel.userInfo.toString()}"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:text="@{userInfoViewModel.userInfo.toString()}" />
             </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userInfoLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
