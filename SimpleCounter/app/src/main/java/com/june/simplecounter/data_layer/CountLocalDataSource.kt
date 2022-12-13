@@ -8,14 +8,14 @@ import android.content.SharedPreferences
  * data > data > 패키지명 > shared_prefs > pref.xml
  */
 
-class PreferenceManager private constructor(context: Context) {
+class CountLocalDataSource private constructor(context: Context) {
     companion object {
         const val INIT_VALUE_ALIAS = "initValue"
-        private var instance: PreferenceManager? = null
+        private var instance: CountLocalDataSource? = null
 
-        fun getInstance(_context: Context): PreferenceManager {
+        fun getInstance(_context: Context): CountLocalDataSource {
             return instance ?: synchronized(this) {
-                instance ?: PreferenceManager(_context).also {
+                instance ?: CountLocalDataSource(_context).also {
                     instance = it
                 }
             }
