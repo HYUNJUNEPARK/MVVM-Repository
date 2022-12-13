@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="countViewModel"
+            type="com.june.simplecounter.ui_layer.CountViewModel" />
 
         <variable
-            name="viewModel"
-            type="com.june.simplecounter.ui_layer.CountViewModel" />
+            name="userInfoViewModel"
+            type="com.june.simplecounter.ui_layer.UserInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +37,7 @@
                 android:id="@+id/txt_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{Integer.toString(viewModel.count)}"
+                android:text="@{Integer.toString(countViewModel.count)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -44,7 +47,7 @@
                 android:id="@+id/plus"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:onClick="@{() -> viewModel.increase()}"
+                android:onClick="@{() -> countViewModel.increase()}"
                 android:text="+"
                 app:layout_constraintEnd_toStartOf="@+id/minus"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +57,7 @@
                 android:id="@+id/minus"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:onClick="@{() -> viewModel.decrease()}"
+                android:onClick="@{() -> countViewModel.decrease()}"
                 android:text="-"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/plus"
@@ -85,13 +88,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="load"
+                android:onClick="@{()->userInfoViewModel.fetchUserInfo()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv1" />
+
+            <ScrollView
+                app:layout_constraintTop_toBottomOf="@id/button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <TextView
+                    android:text="@{userInfoViewModel.userInfo.toString()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
