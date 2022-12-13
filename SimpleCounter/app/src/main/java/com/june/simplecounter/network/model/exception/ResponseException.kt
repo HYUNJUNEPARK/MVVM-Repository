@@ -1,4 +1,4 @@
-package com.example.networkretrofit.network.model.exception
+package com.june.simplecounter.network.model.exception
 
 
 import com.google.gson.annotations.SerializedName

@@ -1,11 +1,12 @@
 package com.june.simplecounter.network
 
 import android.util.Log
-import com.example.networkretrofit.network.model.exception.ResponseException
+import com.june.simplecounter.network.model.exception.ResponseException
 import com.google.gson.Gson
 import com.june.simplecounter.network.ApiConstants.ERROR_CODE
 import com.june.simplecounter.network.ApiConstants.EXCEPTION_BODY_EMPTY
 import com.june.simplecounter.network.ApiConstants.NETWORK_TAG
+import com.june.simplecounter.network.model.response.Repository
 import retrofit2.Response
 
 /**
@@ -13,6 +14,18 @@ import retrofit2.Response
  */
 class ApiResponseUtil {
     private val gson = Gson()
+
+    fun covertResponseToDataClass(response: Response<Repository>): Repository? {
+        try {
+            if (response.body() != null) {
+                return response.body()!!
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
 
     //response 코드에 따라 서버 응답을 JSON String 으로 반환한다.
     fun covertResponseToString(response: Response<Any>): String {

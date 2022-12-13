@@ -1,3 +1,3 @@
-package com.example.networkretrofit.network.model.response
+package com.june.simplecounter.network.model.response
 
 class Repository : ArrayList<RepositoryItem>()

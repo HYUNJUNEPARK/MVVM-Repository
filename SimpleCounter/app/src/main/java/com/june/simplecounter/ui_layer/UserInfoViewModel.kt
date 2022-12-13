@@ -1,5 +1,6 @@
 package com.june.simplecounter.ui_layer
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UserInfoViewModel(): ViewModel() {
+class UserInfoViewModel : ViewModel() {
     private val ioDispatcher = Dispatchers.IO
     private val retrofitObj = RetrofitObj
 
@@ -24,9 +25,16 @@ class UserInfoViewModel(): ViewModel() {
 
     fun fetchUserInfo() {
         userInfoRemoteDataSource.fetchUser { response ->
-            CoroutineScope(Dispatchers.Main).launch {
-                _userInfo.value = response
+            //Log.d("testLog", "fetchUserInfo: $response")
+            for (i in response!!.iterator()) {
+
+
+                Log.d("testLog", "fetchUserInfo: ${i.name}")
             }
+
+//            CoroutineScope(Dispatchers.Main).launch {
+//                _userInfo.value = response
+//            }
         }
     }
 }

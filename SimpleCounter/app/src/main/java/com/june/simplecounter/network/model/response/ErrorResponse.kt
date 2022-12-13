@@ -1,5 +1,4 @@
-package com.example.networkretrofit.network.model.response
-
+package com.june.simplecounter.network.model.response
 
 import com.google.gson.annotations.SerializedName
 

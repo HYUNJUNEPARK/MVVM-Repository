@@ -1,4 +1,4 @@
-package com.example.networkretrofit.network.model.response
+package com.june.simplecounter.network.model.response
 
 data class Owner(
     val avatar_url: String,
