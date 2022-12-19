@@ -18,11 +18,21 @@ class UserInfoViewModel : ViewModel() {
         mainDispatcher = mainDispatcher
     )
 
+    val isUserInfoFetching: LiveData<Boolean>
+        get() = _isUserInfoFetching
+    private var _isUserInfoFetching = MutableLiveData<Boolean>()
+
     val userInfo: LiveData<ArrayList<String>>
         get() = _userInfo
     private var _userInfo = MutableLiveData<ArrayList<String>>()
 
+    init {
+        _isUserInfoFetching.value = false
+    }
+
     fun fetchUserInfo() {
+        _isUserInfoFetching.value = true
+
         val userNameUiState = UserNameUiState()
 
         userInfoRemoteDataSource.fetchUser { response ->
@@ -36,6 +46,7 @@ class UserInfoViewModel : ViewModel() {
             }
 
             _userInfo.value = userNameUiState
+            _isUserInfoFetching.value = false
         }
     }
 }
