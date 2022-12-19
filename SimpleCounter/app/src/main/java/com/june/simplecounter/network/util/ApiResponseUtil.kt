@@ -1,11 +1,7 @@
-package com.june.simplecounter.network
+package com.june.simplecounter.network.util
 
-import android.util.Log
 import com.june.simplecounter.network.model.exception.ResponseException
 import com.google.gson.Gson
-import com.june.simplecounter.network.ApiConstants.ERROR_CODE
-import com.june.simplecounter.network.ApiConstants.EXCEPTION_BODY_EMPTY
-import com.june.simplecounter.network.ApiConstants.NETWORK_TAG
 import com.june.simplecounter.network.model.response.Repository
 import retrofit2.Response
 
@@ -14,7 +10,10 @@ import retrofit2.Response
  */
 class ApiResponseUtil {
     private val gson = Gson()
+    private val errorCode = "999"
+    private val exceptionMessageBodyEmpty = "Exception : Response Body Empty"
 
+    //response 의 body 데이터만 추출해 반환한다.
     fun covertResponseToDataClass(response: Response<Repository>): Repository? {
         try {
             if (response.body() != null) {
@@ -29,14 +28,6 @@ class ApiResponseUtil {
 
     //response 코드에 따라 서버 응답을 JSON String 으로 반환한다.
     fun covertResponseToString(response: Response<Any>): String {
-        Log.d(NETWORK_TAG,
-            "Response\n" +
-                    "[\nheaders : ${response.headers()}]\n" +
-                    "[ body : ${response.body()} ]\n" +
-                    "[ errorBody : ${response.errorBody().toString()} ]\n" +
-                    "[ raw :  ${response.raw()}]"
-        )
-
         when (response.code()) {
             200, 201 -> {
                 if (response.body() != null) {
@@ -64,7 +55,7 @@ class ApiResponseUtil {
             } else if (response.body() != null) {
                 response.body().toString()
             } else {
-                EXCEPTION_BODY_EMPTY
+                exceptionMessageBodyEmpty
             }
             //DataClass -> JSON String
             return gson.toJson(
@@ -83,7 +74,7 @@ class ApiResponseUtil {
         //DataClass -> JSON String
         return gson.toJson(
             ResponseException(
-                code = ERROR_CODE,
+                code = errorCode,
                 message = message
             )
         )

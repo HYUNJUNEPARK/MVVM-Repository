@@ -1,40 +1,41 @@
 package com.june.simplecounter.ui_layer
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.june.simplecounter.data_layer.UserInfoRemoteDataSource
 import com.june.simplecounter.network.RetrofitObj
-import kotlinx.coroutines.CoroutineScope
+import com.june.simplecounter.network.model.UserNameUiState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class UserInfoViewModel : ViewModel() {
     private val ioDispatcher = Dispatchers.IO
+    private val mainDispatcher = Dispatchers.Main
     private val retrofitObj = RetrofitObj
-
     private val userInfoRemoteDataSource = UserInfoRemoteDataSource(
         retrofitObj = retrofitObj,
-        ioDispatcher = ioDispatcher
+        ioDispatcher = ioDispatcher,
+        mainDispatcher = mainDispatcher
     )
 
-    val userInfo: LiveData<String>
+    val userInfo: LiveData<ArrayList<String>>
         get() = _userInfo
-    private var _userInfo = MutableLiveData<String>()
+    private var _userInfo = MutableLiveData<ArrayList<String>>()
 
     fun fetchUserInfo() {
+        val userNameUiState = UserNameUiState()
+
         userInfoRemoteDataSource.fetchUser { response ->
-            //Log.d("testLog", "fetchUserInfo: $response")
-            for (i in response!!.iterator()) {
-
-
-                Log.d("testLog", "fetchUserInfo: ${i.name}")
+            if (response.isNullOrEmpty()) {
+                return@fetchUser
             }
 
-//            CoroutineScope(Dispatchers.Main).launch {
-//                _userInfo.value = response
-//            }
+            //Repository : ArrayList<RepositoryItem> 에서 name 데이터만 추출
+            for (user in response!!.iterator()) {
+                userNameUiState.add(user.name)
+            }
+
+            _userInfo.value = userNameUiState
         }
     }
 }

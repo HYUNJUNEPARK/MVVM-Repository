@@ -1,3 +1,3 @@
 package com.june.simplecounter.network.model
 
-class UserNameUiState : ArrayList<UserNameUiStateItem>()
+class UserNameUiState : ArrayList<String>()

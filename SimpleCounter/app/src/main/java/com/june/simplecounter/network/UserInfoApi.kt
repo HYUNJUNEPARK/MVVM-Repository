@@ -7,6 +7,4 @@ import retrofit2.http.GET
 interface UserInfoApi {
     @GET("users/Kotlin/repos")
     fun fetchUserInfo(): Call<Repository>
-
-
 }

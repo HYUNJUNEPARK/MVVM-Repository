@@ -1,21 +1,25 @@
 package com.june.simplecounter.data_layer
 
-import com.june.simplecounter.network.ApiResponseUtil
+import com.june.simplecounter.network.util.ApiResponseUtil
 import com.june.simplecounter.network.RetrofitObj
 import com.june.simplecounter.network.model.response.Repository
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class UserInfoRemoteDataSource(
     private val retrofitObj: RetrofitObj,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
+    private val mainDispatcher: CoroutineDispatcher
 ) {
     fun fetchUser(callback:(Repository?) -> Unit) {
         try {
             CoroutineScope(ioDispatcher).launch {
-                val response = retrofitObj.retrofit.fetchUserInfo().execute()
-                callback(ApiResponseUtil().covertResponseToDataClass(response))
+                val response = retrofitObj.retrofit
+                    .fetchUserInfo()
+                    .execute()
+
+                withContext(mainDispatcher) {
+                    callback(ApiResponseUtil().covertResponseToDataClass(response))
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()

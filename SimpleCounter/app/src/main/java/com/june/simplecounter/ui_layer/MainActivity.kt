@@ -1,10 +1,6 @@
 package com.june.simplecounter.ui_layer
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,6 +19,5 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.countViewModel = countViewModel
         binding.userInfoViewModel = userInfoViewModel
-
     }
 }
