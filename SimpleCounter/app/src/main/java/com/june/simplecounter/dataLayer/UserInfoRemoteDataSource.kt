@@ -1,4 +1,4 @@
-package com.june.simplecounter.data_layer
+package com.june.simplecounter.dataLayer
 
 import com.june.simplecounter.network.util.ApiResponseUtil
 import com.june.simplecounter.network.RetrofitObj

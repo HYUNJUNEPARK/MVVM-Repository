@@ -1,9 +1,9 @@
-package com.june.simplecounter.ui_layer
+package com.june.simplecounter.uiLayer
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.june.simplecounter.data_layer.UserInfoRemoteDataSource
+import com.june.simplecounter.dataLayer.UserInfoRemoteDataSource
 import com.june.simplecounter.network.RetrofitObj
 import com.june.simplecounter.network.model.UserNameUiState
 import kotlinx.coroutines.Dispatchers

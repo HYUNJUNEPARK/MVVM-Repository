@@ -6,17 +6,17 @@
     <data>
         <variable
             name="countViewModel"
-            type="com.june.simplecounter.ui_layer.CountViewModel" />
+            type="com.june.simplecounter.uiLayer.CountViewModel" />
 
         <variable
             name="userInfoViewModel"
-            type="com.june.simplecounter.ui_layer.UserInfoViewModel" />
+            type="com.june.simplecounter.uiLayer.UserInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui_layer.MainActivity">
+        tools:context=".uiLayer.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/countLayout"

@@ -1,11 +1,11 @@
-package com.june.simplecounter.ui_layer
+package com.june.simplecounter.uiLayer
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.june.simplecounter.data_layer.CountLocalDataSource
-import com.june.simplecounter.data_layer.CountLocalDataSource.Companion.INIT_VALUE_ALIAS
+import com.june.simplecounter.dataLayer.CountLocalDataSource
+import com.june.simplecounter.dataLayer.CountLocalDataSource.Companion.INIT_VALUE_ALIAS
 
 class CountViewModel(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext

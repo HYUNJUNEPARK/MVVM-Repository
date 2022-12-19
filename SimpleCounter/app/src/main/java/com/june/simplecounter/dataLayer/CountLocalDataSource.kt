@@ -1,4 +1,4 @@
-package com.june.simplecounter.data_layer
+package com.june.simplecounter.dataLayer
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,7 +1,6 @@
-package com.june.simplecounter.ui_layer
+package com.june.simplecounter.uiLayer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
