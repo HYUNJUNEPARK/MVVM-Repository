@@ -2,6 +2,7 @@ package com.june.simplecounter.network.util
 
 import com.june.simplecounter.network.model.exception.ResponseException
 import com.google.gson.Gson
+import com.june.simplecounter.network.model.UserNameUiState
 import com.june.simplecounter.network.model.response.Repository
 import retrofit2.Response
 
@@ -26,11 +27,19 @@ class ApiResponseUtil {
     }
 
     //response 코드에 따라 서버 응답을 JSON String 으로 반환한다.
-    fun covertResponseToString(response: Response<Any>): String {
+    fun covertResponseToString(response: Response<Repository>): String {
         when (response.code()) {
             200, 201 -> {
                 if (response.body() != null) {
-                    return gson.toJson(response.body())
+                    if (response.body() != null) {
+                        val userNameUiState = UserNameUiState()
+
+                        for (user in (response.body())!!.iterator()) {
+                            userNameUiState.add(user.name)
+                        }
+
+                        return gson.toJson(userNameUiState)
+                    }
                 }
                 return handleExceptionResponse(response)
             }
@@ -47,7 +56,7 @@ class ApiResponseUtil {
     }
 
     //response 코드와 메시지를 JSON String 으로 반환한다.
-    private fun handleExceptionResponse(response: Response<Any>): String {
+    private fun handleExceptionResponse(response: Response<Repository>): String {
         try {
             val message = if (response.errorBody() != null) {
                 response.errorBody()!!.string()

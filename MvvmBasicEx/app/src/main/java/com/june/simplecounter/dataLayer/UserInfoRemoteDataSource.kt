@@ -10,7 +10,7 @@ class UserInfoRemoteDataSource(
     private val ioDispatcher: CoroutineDispatcher,
     private val mainDispatcher: CoroutineDispatcher
 ) {
-    fun fetchUser(callback:(Repository?) -> Unit) {
+    fun fetchUser(callback:(String?) -> Unit) {
         try {
             CoroutineScope(ioDispatcher).launch {
                 val response = retrofitObj.retrofit
@@ -18,7 +18,7 @@ class UserInfoRemoteDataSource(
                     .execute()
 
                 withContext(mainDispatcher) {
-                    callback(ApiResponseUtil().covertResponseToDataClass(response))
+                    callback(ApiResponseUtil().covertResponseToString(response))
                 }
             }
         } catch (e: Exception) {

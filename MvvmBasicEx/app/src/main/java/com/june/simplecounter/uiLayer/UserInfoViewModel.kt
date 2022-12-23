@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.june.simplecounter.dataLayer.UserInfoRemoteDataSource
 import com.june.simplecounter.network.RetrofitObj
-import com.june.simplecounter.network.model.UserNameUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +23,8 @@ class UserInfoViewModel : ViewModel() {
     val isUserInfoFetching: LiveData<Boolean>
         get() = _isUserInfoFetching
 
-    private var _userInfo = MutableStateFlow(arrayListOf("Empty"))
-    val userInfo: StateFlow<ArrayList<String>>
+    private var _userInfo = MutableStateFlow("")
+    val userInfo: StateFlow<String>
         get() = _userInfo
 
     init {
@@ -35,18 +34,12 @@ class UserInfoViewModel : ViewModel() {
     fun fetchUserInfo() {
         _isUserInfoFetching.value = true
 
-        val userNameUiState = UserNameUiState()
-
         userInfoRemoteDataSource.fetchUser { response ->
             if (response.isNullOrEmpty()) {
                 _isUserInfoFetching.value = false
                 return@fetchUser
             }
-            for (user in response.iterator()) {
-                userNameUiState.add(user.name)
-            }
-
-            _userInfo.value = userNameUiState
+            _userInfo.value = response
             _isUserInfoFetching.value = false
         }
     }
