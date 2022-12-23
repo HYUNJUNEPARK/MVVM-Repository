@@ -16,33 +16,62 @@
 
 package com.example.android.unscramble.ui.game
 
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.TtsSpan
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.*
+
+
+
 
 /**
  * ViewModel containing the app data and methods to process the data
  */
 class GameViewModel : ViewModel() {
-    //사용자 점수
-    private val _score = MutableLiveData(0)
-    val score: LiveData<Int>
+    private val _score = MutableStateFlow(0)
+    val score: StateFlow<Int>
         get() = _score
 
-    //현재 진행 중인 문제 번호
-    private val _currentWordCount = MutableLiveData(0)
-    val currentWordCount: LiveData<Int>
+    private val _currentWordCount = MutableStateFlow(0)
+    val currentWordCount: StateFlow<Int>
         get() = _currentWordCount
 
-    //현재 출제 중인 배열이 섞인 단어
-    private val _currentScrambledWord = MutableLiveData<String>()
-    val currentScrambledWord: LiveData<String>
-        get() = _currentScrambledWord
+    private val _currentScrambledWord =  MutableStateFlow("")
+    val currentScrambledWord: StateFlow<Spannable> = _currentScrambledWord
+        .map {
+            val scrambledWord = it.toString()
+            val spannable: Spannable = SpannableString(scrambledWord)
+            spannable.setSpan(
+                /*what */TtsSpan.VerbatimBuilder(scrambledWord).build(),
+                /*start*/0,
+                /*end  */scrambledWord.length,
+                /*flags*/Spannable.SPAN_INCLUSIVE_INCLUSIVE
+            )
+            spannable
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = SpannableString("")
+        )
+        //초기 저장값이 ""이고, 구독 후 5초 후에 처음 발행 받고, ViewModel의 생명주기만큼만 구독받는 행돌을 하는 StringFlow가 생성된다.
 
-    // List of words used in the game
+    /*
+    https://kotlinworld.com/233
+    stateIn()
+    Flow 는 UI에서 사용되기 위해 StateFlow로 변환되어야 한다.(변환 로직 필요)
+    UI에서는 StateFlow를 구독하여 항상 최신 데이터를 받는다.
+    StateFlow가 항상 Flow를 구독하고 있으면 메모리 누수가 생기므로 StateFlow가 살아있어야하는 CoroutineScope를 명시할 수 있어야한다. -> sateIn()을 통해 가능
+
+    scope : StateFlow가 Flow로 부터 데이터를 구독받을 CoroutineScope를 명시
+    started : Flow로 부터 언제부터 구독을 할지 명시할 수 있다.
+    initialValue : StateFlow에 저장될 초기값을 설정한다.
+    */
+
     private var usedWordsList: MutableList<String> = mutableListOf()
-
     //문자 배열이 섞이지 않은 현재 출제 중인 단어
     private lateinit var currentWord: String
 

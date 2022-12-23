@@ -55,12 +55,6 @@ class GameFragment : Fragment() {
         // Specify the fragment view as the lifecycle owner of the binding.
         // This is used so that the binding can observe LiveData updates
         binding.lifecycleOwner = viewLifecycleOwner
-
-
-        // 뷰모델 내부 currentScrambledWord 를 관찰하며 변경이 발생한다면 내부 로직을 실행
-        viewModel.currentScrambledWord.observe(viewLifecycleOwner) { newWord ->
-            binding.textViewUnscrambledWord.text = newWord
-        }
     }
 
     /*
