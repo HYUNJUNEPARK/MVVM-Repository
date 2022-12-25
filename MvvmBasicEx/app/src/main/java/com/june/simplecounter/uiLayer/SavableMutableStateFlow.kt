@@ -10,6 +10,7 @@ class SavableMutableStateFlow<T>(
 ) {
     companion object {
         const val KEY_COUNT = "count"
+
     }
 
     private val stateFlow: StateFlow<T> = savedStateHandle.getStateFlow(key, initialValue)
