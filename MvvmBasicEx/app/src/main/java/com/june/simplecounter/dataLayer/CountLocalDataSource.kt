@@ -10,7 +10,7 @@ import android.content.SharedPreferences
 
 class CountLocalDataSource private constructor(context: Context) {
     companion object {
-        const val INIT_VALUE_ALIAS = "initValue"
+        const val COUNT_VALUE_ALIAS = "initValue"
         const val PREF_FILE_NAME = "PREF"
         private var instance: CountLocalDataSource? = null
 
