@@ -5,7 +5,7 @@ import com.june.simplecounter.network.UserInfoApi
 import kotlinx.coroutines.*
 
 /**
- * @param retrofit
+ * @param userInfoApi
  * @param ioDispatcher
  * @param mainDispatcher
  *
@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
  */
 
 class UserInfoRemoteDataSource(
-    private val retrofit: UserInfoApi,
+    private val userInfoApi: UserInfoApi,
     private val ioDispatcher: CoroutineDispatcher,
     private val mainDispatcher: CoroutineDispatcher
 ) {
@@ -25,7 +25,7 @@ class UserInfoRemoteDataSource(
     fun fetchUser(callback:(String?) -> Unit) {
         try {
             CoroutineScope(ioDispatcher).launch {
-                val response = retrofit
+                val response = userInfoApi
                     .fetchUserInfo()
                     .execute()
 
