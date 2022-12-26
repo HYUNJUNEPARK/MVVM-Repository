@@ -1,4 +1,4 @@
-package com.june.simplecounter.uiLayer
+package com.june.simplecounter.uiLayer.util
 
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.StateFlow

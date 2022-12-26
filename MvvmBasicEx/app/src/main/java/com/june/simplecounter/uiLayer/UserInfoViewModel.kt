@@ -4,13 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.june.simplecounter.dataLayer.UserInfoRemoteDataSource
-import com.june.simplecounter.network.RetrofitObj
+import com.june.simplecounter.network.UserInfoClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class UserInfoViewModel : ViewModel() {
-    private val retrofitObj = RetrofitObj
-    private val userInfoRemoteDataSource = UserInfoRemoteDataSource(retrofitObj)
+    private val userInfoRemoteDataSource = UserInfoRemoteDataSource(
+        retrofit = UserInfoClient.retrofit,
+        mainDispatcher = Dispatchers.Main,
+        ioDispatcher = Dispatchers.IO
+    )
 
     private var _isUserInfoFetching = MutableLiveData<Boolean>()
     val isUserInfoFetching: LiveData<Boolean>
