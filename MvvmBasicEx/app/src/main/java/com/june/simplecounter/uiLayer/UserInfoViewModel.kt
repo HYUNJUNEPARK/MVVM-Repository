@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.june.simplecounter.dataLayer.UserInfoRemoteDataSource
+import com.june.simplecounter.dataLayer.UserInfoRepository
 import com.june.simplecounter.network.UserInfoClient
 import kotlinx.coroutines.Dispatchers
 
@@ -13,6 +14,10 @@ class UserInfoViewModel : ViewModel() {
         mainDispatcher = Dispatchers.Main,
         ioDispatcher = Dispatchers.IO
     )
+
+
+    private val repository = UserInfoRepository(userInfoRemoteDataSource)
+
 
     private var _isUserInfoFetching = MutableLiveData<Boolean>()
     val isUserInfoFetching: LiveData<Boolean>
@@ -27,15 +32,17 @@ class UserInfoViewModel : ViewModel() {
     }
 
     fun fetchUserInfo() {
+        repository.fetchUser()
+
         _isUserInfoFetching.value = true
 
-        userInfoRemoteDataSource.fetchUser { response ->
-            if (response.isNullOrEmpty()) {
-                _isUserInfoFetching.value = false
-                return@fetchUser
-            }
-            _userInfo.value = response
-            _isUserInfoFetching.value = false
-        }
+//        userInfoRemoteDataSource.fetchUser { response ->
+//            if (response.isNullOrEmpty()) {
+//                _isUserInfoFetching.value = false
+//                return@fetchUser
+//            }
+//            _userInfo.value = response
+//            _isUserInfoFetching.value = false
+//        }
     }
 }

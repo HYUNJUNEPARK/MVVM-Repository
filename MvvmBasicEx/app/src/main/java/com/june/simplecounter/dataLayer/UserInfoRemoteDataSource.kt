@@ -2,6 +2,7 @@ package com.june.simplecounter.dataLayer
 
 import com.june.simplecounter.network.util.ApiResponseUtil
 import com.june.simplecounter.network.UserInfoApi
+import com.june.simplecounter.network.model.response.Repository
 import kotlinx.coroutines.*
 
 /**
@@ -22,7 +23,7 @@ class UserInfoRemoteDataSource(
      * 서버와 통신하는 작업은 IO-optimized thread pool 에서 실행되며,
      * 응답값은 ViewModel 내부 LiveData 에 초기화되어야 하기 때문에 LiveData 초기화 작업은 UI-optimized thread pool(Main) 에서 실행된다.
      */
-    fun fetchUser(callback:(String?) -> Unit) {
+    fun fetchUser(callback:(Repository?) -> Unit) {
         try {
             CoroutineScope(ioDispatcher).launch {
                 val response = userInfoApi
@@ -30,7 +31,7 @@ class UserInfoRemoteDataSource(
                     .execute()
 
                 withContext(mainDispatcher) {
-                    callback(ApiResponseUtil().covertResponseToString(response))
+                    callback(ApiResponseUtil().covertResponseToDataClass(response))
                 }
             }
         } catch (e: Exception) {

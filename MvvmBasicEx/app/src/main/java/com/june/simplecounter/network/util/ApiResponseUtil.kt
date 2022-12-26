@@ -31,15 +31,7 @@ class ApiResponseUtil {
         when (response.code()) {
             200, 201 -> {
                 if (response.body() != null) {
-                    if (response.body() != null) {
-                        val userNameUiState = UserNameUiState()
-
-                        for (user in (response.body())!!.iterator()) {
-                            userNameUiState.add(user.name)
-                        }
-
-                        return gson.toJson(userNameUiState)
-                    }
+                    return gson.toJson(response.body())
                 }
                 return handleExceptionResponse(response)
             }
