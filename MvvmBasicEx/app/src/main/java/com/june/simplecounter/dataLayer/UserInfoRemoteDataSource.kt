@@ -1,5 +1,6 @@
 package com.june.simplecounter.dataLayer
 
+import android.util.Log
 import com.june.simplecounter.util.ApiResponseUtil
 import com.june.simplecounter.network.UserInfoApi
 import com.june.simplecounter.network.model.response.Repository
@@ -18,18 +19,17 @@ class UserInfoRemoteDataSource(
 ) {
     /**
      * 깃허브 서버에 유저 정보를 가져온다.
-     * 서버와 통신하는 작업은 IO-optimized thread pool 에서 실행되며,
-     * 응답값은 ViewModel 내부 LiveData 에 초기화되어야 하기 때문에 LiveData 초기화 작업은 UI-optimized thread pool(Main) 에서 실행된다.
+     * 서버와 통신하는 작업은 IO-optimized thread pool 에서 실행한다.
      */
     suspend fun fetchUser(): Repository? {
         try {
-            withContext(ioDispatcher) {
+            val result = withContext(ioDispatcher) {
                 val response = userInfoApi
                     .fetchUserInfo()
                     .execute()
-
                 ApiResponseUtil.covertResponseToDataClass(response)
             }
+            return result
         } catch (e: Exception) {
             e.printStackTrace()
         }
