@@ -1,6 +1,5 @@
 package com.june.simplecounter.dataLayer
 
-import android.util.Log
 import com.june.simplecounter.network.model.UserNameUiState
 import com.june.simplecounter.util.ApiResponseUtil
 import kotlinx.coroutines.sync.Mutex
