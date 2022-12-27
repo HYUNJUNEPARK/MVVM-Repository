@@ -32,16 +32,15 @@ class UserInfoViewModel : ViewModel() {
     }
 
     fun fetchUserInfo() {
-
         CoroutineScope(Dispatchers.IO).launch {
-        val response = repository.fetchUser()
+            val networkResult = repository.fetchUser()
 
             withContext(Dispatchers.Main) {
-                if (response.isNullOrEmpty()) {
+                if (networkResult.isNullOrEmpty()) {
                     _isUserInfoFetching.value = false
                     return@withContext
                 }
-                _userInfo.value = response!!
+                _userInfo.value = networkResult!!
                 _isUserInfoFetching.value = false
             }
         }
