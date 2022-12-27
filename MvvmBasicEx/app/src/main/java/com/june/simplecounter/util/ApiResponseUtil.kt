@@ -1,18 +1,17 @@
-package com.june.simplecounter.network.util
+package com.june.simplecounter.util
 
 import com.june.simplecounter.network.model.exception.ResponseException
 import com.google.gson.Gson
-import com.june.simplecounter.network.model.UserNameUiState
 import com.june.simplecounter.network.model.response.Repository
 import retrofit2.Response
 
 /**
  * 서버 응답을 반환한다.
  */
-class ApiResponseUtil {
+object ApiResponseUtil {
     private val gson = Gson()
-    private val errorCode = "999"
-    private val exceptionMessageBodyEmpty = "Exception : Response Body Empty"
+    private val CODE_ERROR = "999"
+    private val ECEPTION_MESSAGE_BODY_ENPTY = "Exception : Response Body Empty"
 
     //response 의 body 데이터만 추출해 반환한다.
     fun covertResponseToDataClass(response: Response<Repository>): Repository? {
@@ -47,6 +46,15 @@ class ApiResponseUtil {
         }
     }
 
+    fun jsonToString(src: Any): String {
+        try {
+            return gson.toJson(src)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return handleExceptionResponse(e.message.toString())
+        }
+    }
+
     //response 코드와 메시지를 JSON String 으로 반환한다.
     private fun handleExceptionResponse(response: Response<Repository>): String {
         try {
@@ -55,7 +63,7 @@ class ApiResponseUtil {
             } else if (response.body() != null) {
                 response.body().toString()
             } else {
-                exceptionMessageBodyEmpty
+                ECEPTION_MESSAGE_BODY_ENPTY
             }
             //DataClass -> JSON String
             return gson.toJson(
@@ -65,7 +73,7 @@ class ApiResponseUtil {
                 )
             )
         } catch (e: Exception) {
-            return handleExceptionResponse(e.toString())
+            return handleExceptionResponse(e.message.toString())
         }
     }
 
@@ -74,7 +82,7 @@ class ApiResponseUtil {
         //DataClass -> JSON String
         return gson.toJson(
             ResponseException(
-                code = errorCode,
+                code = CODE_ERROR,
                 message = message
             )
         )
