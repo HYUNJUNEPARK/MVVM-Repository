@@ -46,4 +46,22 @@ class UserInfoViewModel : ViewModel() {
         }
         _isUserInfoFetching.value = true
     }
+
+    fun refreshUserInfo() {
+        _userInfo.value = ""
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val networkResult = repository.fetchUser(true)
+
+            withContext(Dispatchers.Main) {
+                if (networkResult.isNullOrEmpty()) {
+                    _isUserInfoFetching.value = false
+                    return@withContext
+                }
+                _userInfo.value = networkResult!!
+                _isUserInfoFetching.value = false
+            }
+        }
+        _isUserInfoFetching.value = true
+    }
 }

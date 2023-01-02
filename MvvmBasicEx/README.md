@@ -1,3 +1,5 @@
+https://developer.android.com/jetpack/guide?hl=ko
+
 ---
 1.UI Layer
 
@@ -45,17 +47,25 @@ ex. LoginRepository 클래스는 캐시를 정보 소스로 사용하고, Paymen
 2.3 데이터 저장 및 디스크에서 가져오기
 -작업 중인 데이터가 프로세스 중단 후에도 유지되어야 하는 경우 데이터의 특징에 따라 다른 방식으로 디스크에 저장한다.
 
-2.3.1 Room DB
+2.3.1 RoomDB
 -쿼리해야하거나 참조 무결성이 필요하거나 부분 업데이트가 필요한 대규모 데이터 세트의 경우
 ex. 뉴스 기사나 작성자를 DB 에 저장하는 경우
+https://developer.android.com/training/data-storage/room?hl=ko
 
 2.3.2 DataStore
 -쿼리하거나 부분적으로 업데이트하지 않고 검색 및 설정해야하는 소규모 데이터 세트의 경우
 -사용자 설정과 같은 키-값 쌍을 저장하는 경우 적합하다.
 ex. 사용자의 기본 날짜 형식, 기타 표시 환경 설정 등의 데이터를 저장하는 경우
+https://developer.android.com/topic/libraries/architecture/datastore?hl=ko#proto-create
 
 2.3.3 File
 -JSON 객체, 비트맵 객체 같은 데이터 청크의 경우
+-File 객체로 작업하고 스레드 전환을 처리해야한다.
+
+2.4 WorkManager 를 사용하여 작업 예약
+-신뢰할수 있는 비동기 작업을 쉽게 예약할 수 있으며 제약 조건을 관히할 수 있는 영구 작업에 권장되는 라이브러리
+-대부분의 백그라운드 처리는 지속적인 작업을 통해 가장 잘 처리되므로 백그라운드 처리에 권장하는 기본 API
+https://developer.android.com/topic/libraries/architecture/workmanager?hl=ko
 
 ---
 
