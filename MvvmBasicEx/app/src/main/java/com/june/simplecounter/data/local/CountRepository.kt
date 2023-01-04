@@ -1,6 +1,6 @@
-package com.june.simplecounter.dataLayer
+package com.june.simplecounter.data.local
 
-import com.june.simplecounter.dataLayer.CountLocalDataSource.Companion.COUNT_VALUE_ALIAS
+import com.june.simplecounter.data.local.CountLocalDataSource.Companion.COUNT_VALUE_ALIAS
 
 class CountRepository(
     private val dataSource: CountLocalDataSource

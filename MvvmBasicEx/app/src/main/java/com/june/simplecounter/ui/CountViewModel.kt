@@ -1,11 +1,11 @@
-package com.june.simplecounter.uiLayer
+package com.june.simplecounter.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import com.june.simplecounter.dataLayer.CountLocalDataSource
-import com.june.simplecounter.dataLayer.CountRepository
-import com.june.simplecounter.uiLayer.SavableMutableStateFlow.Companion.KEY_COUNT
+import com.june.simplecounter.data.local.CountLocalDataSource
+import com.june.simplecounter.data.local.CountRepository
+import com.june.simplecounter.ui.SavableMutableStateFlow.Companion.KEY_COUNT
 import kotlinx.coroutines.flow.StateFlow
 
 class CountViewModel(

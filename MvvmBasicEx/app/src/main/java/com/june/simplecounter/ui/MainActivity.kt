@@ -1,4 +1,4 @@
-package com.june.simplecounter.uiLayer
+package com.june.simplecounter.ui
 
 import android.os.Bundle
 import android.view.View

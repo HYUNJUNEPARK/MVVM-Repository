@@ -1,4 +1,4 @@
-package com.june.simplecounter.dataLayer
+package com.june.simplecounter.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,7 +11,6 @@ import android.content.SharedPreferences
 class CountLocalDataSource private constructor(context: Context) {
     companion object {
         const val COUNT_VALUE_ALIAS = "initValue"
-        const val PREF_FILE_NAME = "PREF"
         private var instance: CountLocalDataSource? = null
 
         fun getInstance(_context: Context): CountLocalDataSource {
@@ -25,10 +24,11 @@ class CountLocalDataSource private constructor(context: Context) {
 
     private val prefs: SharedPreferences
     private val prefsEditor: SharedPreferences.Editor
+    private val prefFileName = "PREF"
 
     init {
         prefs = context.getSharedPreferences(
-            PREF_FILE_NAME,
+            prefFileName,
             Context.MODE_PRIVATE
         )
         prefsEditor = prefs.edit()

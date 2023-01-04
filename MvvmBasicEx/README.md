@@ -1,7 +1,10 @@
 https://developer.android.com/jetpack/guide?hl=ko
 
 ---
+
 1.UI Layer
+
+
 
 ---
 
@@ -70,7 +73,17 @@ https://developer.android.com/topic/libraries/architecture/workmanager?hl=ko
 ---
 
 3. Domain Layer
+-UI 레이어(일반적으로 ViewModel)와 데이터 레이어 사이에 있는 선택적 레이어로, '복잡성을 처리'하거나 '재사용성'을 선호하는 등 필요한 경우에만 사용한다.
+-복잡한 비지니스 로직, 또는 여러 ViewModel 에서 재사용되는 간단한 비즈니스 로직의 캡슐화를 담당한다.
+-도메인 레이어 클래스를 일반적으로 'use case' 또는 'interactor' 라고 하며, 간단하고 가볍게 유지하려면 각 유즈 케이스는 하나의 기능을 담당해야하고 변경 가능한 데이터를 포함해서는 안된다.
+ex. ViewModel 에서 시간대를 사용하여 화면에 적잘한 메시지를 표시하는 경우 GetTimeZoneUseCase 클래스라고 명명
+-유즈 케이스는 일반적으로 Repository 클래스에 종속되며, Repository 와 동일한 방법(자바: 콜백, 코틀린: 코루틴)을 사용하여 UI 레이어와 통신한다.
 
+3.1 Domain Layer 이점
+-코드 중복 방지
+-도메인 레이어 클래스를 사용하는 클래스의 가독성 개선
+-앱의 테스트 가능성 높임
+-책임을 분할하여 대형 클래스를 방지함
 
 ---
 

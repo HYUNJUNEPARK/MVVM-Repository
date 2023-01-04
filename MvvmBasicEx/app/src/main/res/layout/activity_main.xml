@@ -7,17 +7,17 @@
 
         <variable
             name="countViewModel"
-            type="com.june.simplecounter.uiLayer.CountViewModel" />
+            type="com.june.simplecounter.ui.CountViewModel" />
 
         <variable
             name="userInfoViewModel"
-            type="com.june.simplecounter.uiLayer.UserInfoViewModel" />
+            type="com.june.simplecounter.ui.UserInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".uiLayer.MainActivity">
+        tools:context=".ui.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/countLayout"
@@ -119,7 +119,7 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="250dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/button">

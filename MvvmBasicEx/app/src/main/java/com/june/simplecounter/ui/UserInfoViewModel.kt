@@ -1,10 +1,10 @@
-package com.june.simplecounter.uiLayer
+package com.june.simplecounter.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.june.simplecounter.dataLayer.UserInfoRemoteDataSource
-import com.june.simplecounter.dataLayer.UserInfoRepository
+import com.june.simplecounter.data.remote.UserInfoRemoteDataSource
+import com.june.simplecounter.data.remote.UserInfoRepository
 import com.june.simplecounter.network.UserInfoClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,10 +48,8 @@ class UserInfoViewModel : ViewModel() {
     }
 
     fun refreshUserInfo() {
-        _userInfo.value = ""
-
         CoroutineScope(Dispatchers.IO).launch {
-            val networkResult = repository.fetchUser(true)
+            var networkResult = repository.fetchUser(true)
 
             withContext(Dispatchers.Main) {
                 if (networkResult.isNullOrEmpty()) {
@@ -60,6 +58,7 @@ class UserInfoViewModel : ViewModel() {
                 }
                 _userInfo.value = networkResult!!
                 _isUserInfoFetching.value = false
+                networkResult = null
             }
         }
         _isUserInfoFetching.value = true

@@ -1,6 +1,5 @@
-package com.june.simplecounter.dataLayer
+package com.june.simplecounter.data.remote
 
-import android.util.Log
 import com.june.simplecounter.util.ApiResponseUtil
 import com.june.simplecounter.network.UserInfoApi
 import com.june.simplecounter.network.model.response.Repository
