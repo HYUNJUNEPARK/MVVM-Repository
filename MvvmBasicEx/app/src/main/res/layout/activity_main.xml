@@ -7,11 +7,11 @@
 
         <variable
             name="countViewModel"
-            type="com.june.simplecounter.ui.CountViewModel" />
+            type="com.study.mvvmbasicex.ui.CountViewModel" />
 
         <variable
             name="userInfoViewModel"
-            type="com.june.simplecounter.ui.UserInfoViewModel" />
+            type="com.study.mvvmbasicex.ui.UserInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

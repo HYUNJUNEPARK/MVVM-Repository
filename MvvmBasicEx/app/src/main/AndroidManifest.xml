@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.june.simplecounter">
+    package="com.study.mvvmbasicex">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Counter_MVVM_DataBinding">
         <activity
-            android:name="com.june.simplecounter.ui.MainActivity"
+            android:name="com.study.mvvmbasicex.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
